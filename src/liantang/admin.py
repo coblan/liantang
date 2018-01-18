@@ -2,8 +2,8 @@
 
 from __future__ import unicode_literals
 from django.contrib import admin
-from helpers.director.shortcut import TablePage,ModelTable,page_dc,FormPage,ModelFields,model_dc,regist_director
-from .models import JianFangInfo,CunWei,Policy,ApplyTable
+from helpers.director.shortcut import TablePage,ModelTable,page_dc,FormPage,ModelFields,model_dc,regist_director,TabGroup
+from .models import JianFangInfo,CunWei,Policy,ApplyTable,YinJiZhengGai
 # Register your models here.
 class JianFangInfoTablePage(TablePage):
     class JianFangInfoTable(ModelTable):
@@ -25,8 +25,24 @@ class JianFangInfoFormPage(FormPage):
                 'label':'应急整改'
             })
             return heads
-    
-        
+
+
+class YinJiTablePage(TablePage):
+    class YinjiTable(ModelTable):
+        model=YinJiZhengGai
+        exclude=[]
+
+class JianFangGroup(TabGroup):
+    def get_tabs(self):
+        pk =self.request.GET.get('pk')
+        if pk:
+            tabs =[{'name':'blockgroup_normal','label':'基本信息','page_cls':JianFangInfoFormPage},
+                   {'name':'blockgroup_map','label':'应急整改','page_cls':YinJiTablePage}
+              ]
+        else:
+            tabs=[{'name':'blockgroup_normal','label':'基本信息','page_cls':JianFangInfoFormPage},]
+        return tabs
+
 
 class CunWeiTablePage(TablePage):
     class CunWeiTable(ModelTable):
@@ -102,7 +118,8 @@ model_dc[ApplyTable]={'fields':ApplyTableFormPage.ApplyTableForm}
 
 page_dc.update({
     'liantang.jianfanginfo':JianFangInfoTablePage,
-    'liantang.jianfanginfo.edit':JianFangInfoFormPage,
+    'liantang.jianfanginfo.edit':JianFangGroup, #JianFangInfoFormPage,
+    
     'liantang.cunwei':CunWeiTablePage,
     'liantang.cunwei.edit':CunWeiFormPage,
     'liantang.policy':PolicyTablePage,

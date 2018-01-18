@@ -30,12 +30,12 @@ class JianFangInfo(models.Model):
     """
     name = models.CharField('姓名',max_length=100)
     date = models.DateField(verbose_name='申请日期', auto_now_add=True)
-    cunwei = models.ForeignKey(CunWei,verbose_name='村委',on_delete=None,blank=True)
+    cunwei = models.ForeignKey(CunWei,verbose_name='村委',on_delete=None,blank=True,null=True)
     addr = models.CharField('地址',max_length=500,blank=True)
     phone=models.CharField('电话号码',max_length=100,blank=True)
-    state = models.IntegerField('当前流程',blank=True,choices=JIAN_STATE)
-    shenqing = JsonField(verbose_name='申请材料',default={})
-    xieyi = JsonField(verbose_name='协议',default={})
+    state = models.IntegerField('当前流程',blank=True,choices=JIAN_STATE,null=True)
+    shenqing = JsonField(verbose_name='申请材料',default={},blank=True)
+    xieyi = JsonField(verbose_name='协议',default={},blank=True)
     
 
 class YinJiZhengGai(models.Model):

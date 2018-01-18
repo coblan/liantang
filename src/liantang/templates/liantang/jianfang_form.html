@@ -15,6 +15,11 @@
     //	can_log=
     //	can_del=
 
+    tabs={{ tabs | jsonify | default:'[]' }}
+    crt_tab = '{{ crt_tab | default:'null' }}'
+    crt_tab = crt_tab || tabs[0].name
+
+
     shengqin_heads = [
         {name:'id_paper','label':'身份证复印件'},
         {name:'hukou_paper',label:'户口簿复印件'},
@@ -51,9 +56,22 @@
 //				can_log:can_log,
 //			},
         data:{
-
+            tabs:tabs,
+            crt_tab:crt_tab,
         },
         mixins:[field_fun],
+        methods:{
+            item_link:function(name){
+                if(name!=this.crt_tab){
+                    return ex.appendSearch({_tab:name})
+                }else{
+                    return 'javascript:;'
+                }
+            },
+            after_sub:function(new_row){
+                location = ex.appendSearch({pk:new_row.pk})
+            }
+        }
 
     }
 
@@ -75,7 +93,17 @@
         <li><span>编辑</span></li>
     </path-nav>
 
-    <com-form-btn :submit="submit" :del_row="del_row" :cancel="cancel"></com-form-btn>
+    <div class="flex">
+        <ul class="nav nav-tabs tabs flex-grow">
+            <li v-for="tab in tabs" :class="{'active':crt_tab==tab.name}"><a :href="item_link(tab.name)" v-text="tab.label" ></a></li>
+
+        </ul>
+
+        <com-form-btn :submit="submit" :del_row="del_row" :cancel="cancel"></com-form-btn>
+
+    </div>
+
+    <!--<com-form-btn :submit="submit" :del_row="del_row" :cancel="cancel"></com-form-btn>-->
 
 
 
@@ -83,9 +111,9 @@
         <field  v-for='name in ["name","date","cunwei","phone","addr","state"]' key="name" :name='name' :kw='kw'></field>
     </div>
 
-    <div class="field-panel">
-        <field  key="yinji" name='yinji' :kw='kw'></field>
-    </div>
+    <!--<div class="field-panel">-->
+        <!--<field  key="yinji" name='yinji' :kw='kw'></field>-->
+    <!--</div>-->
 
     <div class="field-panel">
         <field  key="shenqing" name='shenqing' :kw='kw'></field>
@@ -107,6 +135,9 @@
             return {
                 urls:this.row[this.name]
             }
+        },
+        watch:{
+
         }
 
     })
@@ -126,7 +157,7 @@
         props:['label','value'],
         data:function(){
             return {
-                xx:this.value,
+                inn_value:this.value,
                 config:{
                     accept:'application/pdf,image/*'
                 }
@@ -134,11 +165,11 @@
         },
         watch:{
             value:function(val){
-                if(this.xx != val){
-                    this.xx = val
+                if(this.inn_value != val){
+                    this.inn_value = val
                 }
             },
-            xx:function(val){
+            inn_value:function(val){
                 this.$emit('input',val)
             }
         }
@@ -148,11 +179,9 @@
 <template id="com-uploader">
     <div>
         <span v-text="label"></span>
-        <com-file-uploader v-model="xx" :config="config"></com-file-uploader>
+        <com-file-uploader v-model="inn_value" :config="config"></com-file-uploader>
     </div>
 </template>
 
-<script>
 
-</script>
 {% endblock %}
