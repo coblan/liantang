@@ -1,0 +1,158 @@
+{% extends "director/index.html" %}
+{% load static %}
+{% load jsonify %}
+
+{% block page_content %}
+
+<script type="text/javascript">
+
+
+    //	heads=
+    //	row =
+    //
+    //
+    //	can_add=
+    //	can_log=
+    //	can_del=
+
+    shengqin_heads = [
+        {name:'id_paper','label':'身份证复印件'},
+        {name:'hukou_paper',label:'户口簿复印件'},
+        {name:'jianfang_apply',label:'建房申请'},
+        {name:'cunwei_paper',label:'村委承诺书'},
+        {name:'shigong_paper',label:'施工单位承诺书'},
+        {name:'jianfang_paper',label:'建房施工图'}
+    ]
+    xieyi_heads =[
+        {name:'nongtang_paper','label':'弄堂协议'},
+        {name:'xichan_paper',label:'析产协议'},
+    ]
+
+    ex.each(heads,function(head){
+        if(head.name=='shenqing'){
+            head.type='field-uploader'
+            head.upload_heads = shengqin_heads
+        }else if(head.name=='xieyi'){
+            head.type='field-uploader'
+            head.upload_heads = xieyi_heads
+        }
+    })
+    form_logic={
+        el:'#there',
+//			data:{
+//				kw:{
+//					heads:heads,
+//			        row:row,
+//			   		errors:{},
+//				},
+//				menu:menu,
+//				can_add:can_add,
+//				can_del:can_del,
+//				can_log:can_log,
+//			},
+        data:{
+
+        },
+        mixins:[field_fun],
+
+    }
+
+    $(function () {
+        new Vue(form_logic)
+    })
+</script>
+
+{% block extra_head %}
+
+{% endblock %}
+
+<div id='there'>
+
+    <div v-if="can_log" style='float: right;padding: 5px 20px;'>
+        <a :href="log_url()">日志</a>
+    </div>
+    <path-nav :menu='menu'>
+        <li><span>编辑</span></li>
+    </path-nav>
+
+    <com-form-btn :submit="submit" :del_row="del_row" :cancel="cancel"></com-form-btn>
+
+
+
+    <div class='field-panel'>
+        <field  v-for='name in ["name","date","cunwei","phone","addr","state"]' key="name" :name='name' :kw='kw'></field>
+    </div>
+
+    <div class="field-panel">
+        <field  key="yinji" name='yinji' :kw='kw'></field>
+    </div>
+
+    <div class="field-panel">
+        <field  key="shenqing" name='shenqing' :kw='kw'></field>
+    </div>
+
+    <div class="field-panel">
+        <field  key="xieyi" name='xieyi' :kw='kw'></field>
+    </div>
+</div>
+
+<script>
+    Vue.component('field-uploader',{
+        template:'#field-uploader',
+        props:['name','row','kw'],
+        data:function(){
+            if(!this.row[this.name]){
+                Vue.set(this.row,this.name,{})
+            }
+            return {
+                urls:this.row[this.name]
+            }
+        }
+
+    })
+</script>
+<template id="field-uploader">
+    <div>
+        <div v-for="head in kw.upload_heads">
+            <com-uploader v-model="urls[head.name]" :label="head.label"></com-uploader>
+        </div>
+
+    </div>
+</template>
+
+<script>
+    Vue.component('com-uploader',{
+        template:'#com-uploader',
+        props:['label','value'],
+        data:function(){
+            return {
+                xx:this.value,
+                config:{
+                    accept:'application/pdf,image/*'
+                }
+            }
+        },
+        watch:{
+            value:function(val){
+                if(this.xx != val){
+                    this.xx = val
+                }
+            },
+            xx:function(val){
+                this.$emit('input',val)
+            }
+        }
+
+    })
+</script>
+<template id="com-uploader">
+    <div>
+        <span v-text="label"></span>
+        <com-file-uploader v-model="xx" :config="config"></com-file-uploader>
+    </div>
+</template>
+
+<script>
+
+</script>
+{% endblock %}
