@@ -1,0 +1,140 @@
+{% extends "director/index.html" %}
+{% load static %}
+{% load jsonify %}
+
+{% block page_content %}
+<script src="{% static 'lib/echarts.min.js' %}"></script>
+<script type="text/javascript">
+
+
+    //	heads=
+    //	row =
+    //
+    //
+    //	can_add=
+    //	can_log=
+    //	can_del=
+    jianfang_total = {{jianfang_total | jsonify}}
+    state_list = {{state_list | jsonify}}
+    yinji_total = {{yinji_total | jsonify}}
+    yingji_state_list={{yingji_state_list | jsonify}}
+    form_logic={
+        el:'#there',
+//			data:{
+//				kw:{
+//					heads:heads,
+//			        row:row,
+//			   		errors:{},
+//				},
+//				menu:menu,
+//				can_add:can_add,
+//				can_del:can_del,
+//				can_log:can_log,
+//			},
+        data:{
+            jianfang_total:jianfang_total,
+            state_list : state_list,
+            yinji_total:yinji_total,
+            yingji_state_list:yingji_state_list
+        },
+        mounted:function(){
+            draw()
+        }
+//        mixins:[field_fun],
+
+    }
+
+    $(function () {
+        new Vue(form_logic)
+    })
+
+
+</script>
+
+{% block extra_head %}
+
+{% endblock %}
+
+<div id='there'>
+
+<div>
+    <div>
+        <b>应急整改</b><span>共计 <span v-text="jianfang_total"></span></span>
+    </div>
+
+
+    <div v-for="state in state_list" style="display: inline-block;width: 10em;height:4em;margin:0.3em;text-align: center;background-color: #b2d8eb">
+        <div v-text="state.count"></div>
+        <div v-text="state.label"></div>
+    </div>
+
+    <div id="chart" style="width: 600px;height:400px;"></div>
+
+    <div style="margin-top:2em;">
+        <b>当前在建房</b><span>共计 <span v-text="yinji_total"></span></span>
+    </div>
+
+    <div v-for="state in yingji_state_list" style="display: inline-block;width: 10em;height:4em;margin:0.3em;text-align: center;background-color: #b2d8eb">
+        <div v-text="state.count"></div>
+        <div v-text="state.label"></div>
+    </div>
+
+</div>
+</div>
+
+<script>
+    function draw(){
+        var myChart = echarts.init(document.getElementById('chart'));
+
+        state_labels=ex.map(state_list,function(state){
+            return state.label
+        })
+        state_count=ex.map(state_list,function(state){
+            return {value:state.count,name:state.label}
+        })
+        option = {
+//            title : {
+//                text: '某站点用户访问来源',
+//                subtext: '纯属虚构',
+//                x:'center'
+//            },
+            tooltip : {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                bottom: 'bottom',
+                data:  state_labels//['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
+            },
+            series : [
+                {
+                    name: '数量',
+                    type: 'pie',
+                    radius : '55%',
+                    center: ['50%', '60%'],
+//                    data:[
+//                        {value:335, name:'直接访问'},
+//                        {value:310, name:'邮件营销'},
+//                        {value:234, name:'联盟广告'},
+//                        {value:135, name:'视频广告'},
+//                        {value:1548, name:'搜索引擎'}
+//                    ],
+                    data:state_count,
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    }
+</script>
+
+{% endblock %}
