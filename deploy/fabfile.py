@@ -50,8 +50,6 @@ def extract(name,dst):
 
 
 def deploy():
-    run('mkdir %s'%PROJECT_DIR)
-    
     archive(local_dir,PROJECT_NAME)
     upload(PROJECT_NAME)
     extract(PROJECT_NAME,PROJECT_DIR)
