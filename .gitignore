@@ -38,3 +38,5 @@ nosetests.xml
 .idea
 *.wpr
 *.wpu
+deploy/*.tar.gz
+wingdbstub.py
