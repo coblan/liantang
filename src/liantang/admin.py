@@ -70,6 +70,8 @@ class JianFangInfoFormPage(FormPage):
         def dict_head(self, head):
             if head['name']=='date':
                 head['type']='date'
+            elif head['name'] == 'state':
+                head['orgin_order']=True
             return head
 
 

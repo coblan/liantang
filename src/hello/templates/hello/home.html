@@ -59,7 +59,7 @@
 
 <div>
     <div>
-        <b>应急整改</b><span>共计 <span v-text="jianfang_total"></span></span>
+        <b>当前在建房</b><span>共计 <span v-text="jianfang_total"></span></span>
     </div>
 
 
@@ -71,7 +71,7 @@
     <div id="chart" style="width: 600px;height:400px;"></div>
 
     <div style="margin-top:2em;">
-        <b>当前在建房</b><span>共计 <span v-text="yinji_total"></span></span>
+        <b>当月应急整改</b><span>共计 <span v-text="yinji_total"></span></span>
     </div>
 
     <div v-for="state in yingji_state_list" style="display: inline-block;width: 10em;height:4em;margin:0.3em;text-align: center;background-color: #b2d8eb">
@@ -104,7 +104,7 @@
             },
             legend: {
                 orient: 'vertical',
-                bottom: 'bottom',
+                right:'right',
                 data:  state_labels//['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
             },
             series : [
