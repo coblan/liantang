@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 
 from helpers.director.engine import BaseEngine,page,fa,page_dc,can_list,can_touch
 from django.contrib.auth.models import User,Group
+from helpers.maintenance.update_static_timestamp import js_stamp
 
 class PcMenu(BaseEngine):
     url_name='liantang'
@@ -28,5 +29,9 @@ class PcMenu(BaseEngine):
                         ]},        
         
     ]
+    
+    def custome_ctx(self, ctx):
+        ctx['js_stamp']=js_stamp
+        return ctx      
 
 PcMenu.add_pages(page_dc)

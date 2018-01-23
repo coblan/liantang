@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django.contrib import admin
 from helpers.director.shortcut import TablePage,ModelTable,page_dc,FormPage,ModelFields,model_dc,regist_director,TabGroup,RowFilter
 from .models import JianFangInfo,CunWei,Policy,ApplyTable,YinJiZhengGai
+from helpers.maintenance.update_static_timestamp import js_stamp
 # Register your models here.
 
 class JianFangInfoTablePage(TablePage):
@@ -51,7 +52,7 @@ class JianFangInfoTablePage(TablePage):
 
 
 class JianFangInfoFormPage(FormPage):
-    ex_js=('/static/js/inputs_uis.pack.js',)
+    ex_js=('/static/js/inputs_uis.pack.js?t=%s'%js_stamp.inputs_uis_pack_js,)
     template = 'liantang/jianfang_form.html'
     class JianFangInfoForm(ModelFields):
         class Meta:
@@ -90,7 +91,7 @@ class YinJiTablePage(TablePage):
             
 
 class YinJiFormPage(FormPage):
-    ex_js=('/static/js/inputs_uis.pack.js',)
+    ex_js=('/static/js/inputs_uis.pack.js?t=%s'%js_stamp.inputs_uis_pack_js,)
     class YinjiForm(ModelFields):
         class Meta:
             model = YinJiZhengGai
@@ -149,7 +150,7 @@ class PolicyTablePage(TablePage):
             return dc        
         
 class PolicyFormPage(FormPage):
-    ex_js=('/static/js/inputs_uis.pack.js',)
+    ex_js=('/static/js/inputs_uis.pack.js?t=%s'%js_stamp.inputs_uis_pack_js,)
     class PolicyForm(ModelFields):
         class Meta:
             model = Policy
@@ -177,7 +178,7 @@ class ApplyTableTablePage(TablePage):
     
 
 class ApplyTableFormPage(FormPage):
-    ex_js=('/static/js/inputs_uis.pack.js',)
+    ex_js=('/static/js/inputs_uis.pack.js?t=%s'%js_stamp.inputs_uis_pack_js,)
     class ApplyTableForm(ModelFields):
         class Meta:
             model = ApplyTable
