@@ -20,13 +20,14 @@ class PcMenu(BaseEngine):
         # {'label':'区域组','url':page('geoinfo.blockgroup'),'icon':fa('fa-map-o')}
         {'label':'村委信息','url':page('liantang.cunwei'),'icon':fa('fa-life-ring')},
         
-        {'label':'账号与权限','url':page('user'),'icon':fa('fa-users'),'visible':can_list((User,Group)),
+        {'label':'账号','url':page('user'),'icon':fa('fa-users'),'visible':can_list((User,Group)),
              'submenu':[
                  {'label':'账号管理','url':page('user'),'visible':can_touch(User)},
-                        # {'label':'权限组','url':page('group'),'visible':can_touch(Group)},
-                        {'label':'权限分组','url':page('group_human'),'visible':can_touch(Group)},
-    
-                        ]},        
+                 ## {'label':'权限组','url':page('group'),'visible':can_touch(Group)},
+                 
+                 #{'label':'权限分组','url':page('group_human'),'visible':can_touch(Group)},
+ 
+                 ]},        
         
     ]
     

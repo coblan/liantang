@@ -52,7 +52,7 @@ class JianFangInfoTablePage(TablePage):
 
 
 class JianFangInfoFormPage(FormPage):
-    ex_js=('/static/js/inputs_uis.pack.js?t=%s'%js_stamp.inputs_uis_pack_js,)
+    # ex_js=('/static/js/inputs_uis.pack.js?t=%s'%js_stamp.inputs_uis_pack_js,)
     template = 'liantang/jianfang_form.html'
     class JianFangInfoForm(ModelFields):
         class Meta:
