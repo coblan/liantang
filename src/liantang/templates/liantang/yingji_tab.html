@@ -71,7 +71,7 @@
                 if(name=='state'){
                     return row['_tr_state']
                 }else{
-                    return row[name]
+                    return table_fun.methods.map.call(this,name,row)
                 }
             }
 //            form_link: function(name, row) {

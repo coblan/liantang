@@ -63,10 +63,10 @@
     </div>
 
 
-    <div v-for="state in state_list" style="display: inline-block;width: 10em;height:4em;margin:0.3em;text-align: center;background-color: #b2d8eb">
+    <a v-for="state in state_list" target="_blank" :href="'/pc/liantang.jianfanginfo?state='+state.key" style="display: inline-block;width: 10em;height:4em;margin:0.3em;text-align: center;background-color: #b2d8eb;">
         <div v-text="state.count"></div>
         <div v-text="state.label"></div>
-    </div>
+    </a>
 
     <div id="chart" style="width: 600px;height:400px;"></div>
 

@@ -37,6 +37,12 @@ class JianFangInfoTablePage(TablePage):
             option=[{'value':'has_zhenggai','label':'有违章'},
                     {'value':'no_zhenggai','label':'无违章'}]
             ls.append({'name':'zhenggai','label':'违章状态','options':option})
+            for dc in ls:
+                if dc['name']=='state':
+                    dc['config']={
+                        'orgin_order':True
+                    }
+                
             return ls    
         
         def get_query(self, query):
@@ -72,7 +78,9 @@ class JianFangInfoFormPage(FormPage):
             if head['name']=='date':
                 head['type']='date'
             elif head['name'] == 'state':
-                head['orgin_order']=True
+                head['config']={
+                    'orgin_order':True
+                }
             return head
 
 
@@ -80,7 +88,7 @@ class YinJiTablePage(TablePage):
     template='liantang/yingji_tab.html'
     class YinjiTable(ModelTable):
         model=YinJiZhengGai
-        exclude=['jianfang']
+        exclude=['jianfang','file']
         # def __init__(self, *args,**kws):
             # super(self.__class__,self).__init__(*args,**kws)
         
@@ -145,7 +153,7 @@ class PolicyTablePage(TablePage):
         
         def dict_row(self, inst):
             dc={
-                'file':'<a href="%s" target="_blank">详情</a>'%inst.file if inst.file else ''
+                'file':'<a href="%s" target="_blank">查看</a>'%inst.file if inst.file else ''
             }
             return dc        
         
@@ -172,7 +180,7 @@ class ApplyTableTablePage(TablePage):
         
         def dict_row(self, inst):
             dc={
-                'file':'<a href="%s" target="_blank">详情</a>'%inst.file if inst.file else ''
+                'file':'<a href="%s" target="_blank">查看</a>'%inst.file if inst.file else ''
             }
             return dc
     

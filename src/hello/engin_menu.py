@@ -33,6 +33,9 @@ class PcMenu(BaseEngine):
     
     def custome_ctx(self, ctx):
         ctx['js_stamp']=js_stamp
+        ctx['table_fun_config'] ={
+            'detail_link': '详情', #'<i class="fa fa-info-circle" aria-hidden="true" title="查看详情"></i>'#,
+        }
         return ctx      
 
 PcMenu.add_pages(page_dc)

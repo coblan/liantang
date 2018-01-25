@@ -418,9 +418,13 @@ var _multi_picture = __webpack_require__(14);
 
 var _file_uploader = __webpack_require__(16);
 
+// �����ļ������������д�����ʱ�����ˡ�
+// ���� com-multi-picture ��������Ϊ color��featureʱ���õ�������������
+// com_file_uploader ������ͼƬ�ϴ������й��ܣ��Ѿ��Ƶ���director/inputsĿ¼��
+// �Լ���Ŀ���棬��ʵ���԰�uis����Ŀ¼ɾ���ˡ���ΪuisӦ���Ƶ�direcor(PC)����f7(�ֻ�)Ŀ¼��ȥ
+
+
 Vue.component('com-multi-picture', _multi_picture.com_multi_picture);
-Vue.component('com-file-uploader', _file_uploader.com_file_uploader);
-Vue.component('field-file-uploader', _file_uploader.field_file_uploader);
 
 /***/ }),
 /* 14 */
@@ -561,7 +565,7 @@ var com_file_uploader = exports.com_file_uploader = {
         };
     },
 
-    template: '<div class="com_multi_picture">\n\n    <input v-if="cpt_config.multiple" class="pic-input" type="file" @change="upload_pictures($event)" :accept="cpt_config.accept" multiple="multiple">\n    <input v-else class="pic-input" type="file" @change="upload_pictures($event)" :accept="cpt_config.accept">\n\n     <ul class="sortable">\n        <li  v-for="pic in pictures" class="item" >\n            <img v-if="is_image(pic)" :src="pic" alt=""/>\n            <div v-else style="width: 12em;text-align: center;padding:1em 0;word-wrap: break-word;">\n                <span v-text="get_res_type(pic)" style="font-size: 300%;font-weight: 700;"></span>\n                <span v-text="get_res_basename(pic)"></span>\n            </div>\n            <!--<span class="remove-btn" title="remove image" @click="remove(pic)">-->\n                <!--<i class="fa fa-window-close" aria-hidden="true"></i>-->\n            <!--</span>-->\n\n        </li>\n    </ul>\n\n    </div>',
+    template: '<div class="com_multi_picture">\n\n    <input v-if="cpt_config.multiple" class="pic-input" type="file" @change="upload_pictures($event)" :accept="cpt_config.accept" multiple="multiple">\n    <input v-else class="pic-input" type="file" @change="upload_pictures($event)" :accept="cpt_config.accept">\n\n     <ul class="sortable">\n        <li  v-for="pic in pictures" class="item" >\n            <img v-if="is_image(pic)" :src="pic" alt=""/>\n            <div v-else style="width: 5em;text-align: center;padding:1em 0;word-wrap: break-word;">\n                <span v-text="get_res_type(pic)" style="font-size: 300%;font-weight: 700;"></span>\n                <span v-text="get_res_basename(pic)"></span>\n            </div>\n            <!--<span class="remove-btn" title="remove image" @click="remove(pic)">-->\n                <!--<i class="fa fa-window-close" aria-hidden="true"></i>-->\n            <!--</span>-->\n\n        </li>\n    </ul>\n\n    </div>',
     mounted: function mounted() {
         var self = this;
         if (this.cpt_config.sortable) {

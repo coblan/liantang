@@ -22,7 +22,7 @@ class HomePage(object):
             if k == 10:
                 continue
             count = JianFangInfo.objects.filter(state=k).count()
-            state_list.append({'label':v,'count':count})
+            state_list.append({'label':v,'count':count,'key':k})
         for k,v in YINGJI_STATE:
             count = yinji_this_month.filter(state=k).count()
             yingji_state_list.append({'label':v,'count':count })

@@ -17,6 +17,8 @@
     //	can_del=
     //	search_args=ex.parseSearch()
     //	search字段从 search_args._q 来取值
+
+
     table_logic={
         el:'#there',
         data:{
@@ -46,8 +48,8 @@
             map:function(name,row){
                 if(name=='state'){
                     return row['_tr_state']
-                }else{
-                    return row[name]
+                }else {
+                    return table_fun.methods.map.call(this,name,row)
                 }
             }
         }
