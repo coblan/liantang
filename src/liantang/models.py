@@ -72,7 +72,7 @@ class Policy(models.Model):
     """
     name = models.CharField('名称',max_length=200,blank=True)
     desp = models.TextField(verbose_name='描述',blank=True)
-    file = models.CharField('文件材料',max_length=500,blank=True)
+    file = models.CharField('文件材料',max_length=500,blank=True,help_text='请选择PDF文件上传')
 
 class ApplyTable(models.Model):
     """
@@ -80,5 +80,5 @@ class ApplyTable(models.Model):
     """
     name = models.CharField('名称',max_length=200,blank=True)
     desp = models.TextField(verbose_name='描述',blank=True)
-    file = models.CharField('文件材料',max_length=500,blank=True)
+    file = models.CharField('文件材料',max_length=500,blank=True,help_text='请选择PDF文件上传')
     

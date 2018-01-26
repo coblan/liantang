@@ -177,8 +177,8 @@
     })
 </script>
 <template id="com-uploader">
-    <div>
-        <span v-text="label"></span>
+    <div style="margin: 2em;padding-top: 1em;border-top: 1px solid #bababa;">
+        <div style="margin-bottom:1em; "><span v-text="label"></span><span>(PDF/图片)</span></div>
         <com-file-uploader v-model="inn_value" :config="config"></com-file-uploader>
     </div>
 </template>
