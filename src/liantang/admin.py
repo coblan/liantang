@@ -9,6 +9,7 @@ from helpers.maintenance.update_static_timestamp import js_stamp
 
 class JianFangInfoTablePage(TablePage):
     template='liantang/jianfang.html'
+
     class JianFangInfoTable(ModelTable):
         model = JianFangInfo
         exclude=['shenqing','xieyi']
@@ -86,6 +87,7 @@ class JianFangInfoFormPage(FormPage):
 
 class YinJiTablePage(TablePage):
     template='liantang/yingji_tab.html'
+    page_label='应急整改'
     class YinjiTable(ModelTable):
         model=YinJiZhengGai
         exclude=['jianfang','file']

@@ -44,6 +44,8 @@ class JianFangInfo(models.Model):
     shenqing = JsonField(verbose_name='申请材料',default={},blank=True)
     xieyi = JsonField(verbose_name='协议',default={},blank=True)
     
+    def __unicode__(self):
+        return "%s 建房"%self.name
 
     
 YINGJI_STATE=(
@@ -73,6 +75,9 @@ class Policy(models.Model):
     name = models.CharField('名称',max_length=200,blank=True)
     desp = models.TextField(verbose_name='描述',blank=True)
     file = models.CharField('文件材料',max_length=500,blank=True,help_text='请选择PDF文件上传')
+    
+    def __unicode__(self):
+        return self.name
 
 class ApplyTable(models.Model):
     """
@@ -81,4 +86,7 @@ class ApplyTable(models.Model):
     name = models.CharField('名称',max_length=200,blank=True)
     desp = models.TextField(verbose_name='描述',blank=True)
     file = models.CharField('文件材料',max_length=500,blank=True,help_text='请选择PDF文件上传')
+    
+    def __unicode__(self):
+        return self.name    
     
