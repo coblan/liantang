@@ -1,0 +1,38 @@
+
+{% extends 'authuser/base.html' %}
+{% block content %}
+
+<script>
+    if(window.java_obj){
+        var now = Date.now()
+        var elapse= now- java_obj.getStartTimestamp()
+        if(elapse>2000){
+            var delay=0
+        }else{
+            var delay=2000-elapse
+        }
+        setTimeout(function(){
+            java_obj.contentShow()
+        },delay)
+    }
+</script>
+
+<script type="text/javascript">
+    if('hide_load' in parent){
+        parent.hide_load()
+    }
+    next="{{next |default:'/'}}"
+    regist_url='{{regist_url}}'
+
+
+
+
+</script>
+
+<div style="text-align: center">
+    <div style="max-width: 800px;display: inline-block;margin-top:100px;">
+        <h1>由于服务器安全问题，无法对外发送邮件，请联系管理员找回或者修改密码！</h1>
+    </div>
+</div>
+
+{% endblock %}

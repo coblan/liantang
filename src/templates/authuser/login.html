@@ -83,7 +83,7 @@
 				submit_info:function () {
 					var models=this.meta.row
 					var post_data={
-						do_login:{username:models.username,password:models.password}
+						do_login:{username:models.username,password:models.password,auto_login:this.auto_login}
 					}
 					var self=this;
 
@@ -175,7 +175,9 @@
 			<!--</div>-->
 			<div style="margin-top: 0.5em;">
 				<input type="checkbox" id="auto_login" v-model="auto_login"/><label for="auto_login" style="font-weight: 400;">下次自动登陆</label>
-				<span style="float: right;cursor: pointer;">忘记密码</span>
+				<span style="float: right;cursor: pointer;">
+					<a href="/accounts/forget">忘记密码</a>
+				</span>
 			</div>
 
 		</form>
