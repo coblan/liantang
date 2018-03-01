@@ -55,6 +55,29 @@
 
 {% endblock %}
 
+<style>
+.state-stage{
+    display: inline-block;
+    width: 10em;
+    height:4em;
+    margin:0.3em;
+    text-align: center;
+    background-color: #1eaf9b;
+    color: white;
+    padding-top: 0.5em;
+}
+.state-stage:hover{
+    color: #ffae9f;
+    text-decoration: none;
+}
+.zhenggai-info{
+    display: inline-block;
+    width: 10em;
+    height:4em;
+    margin:0.8em;
+    text-align: center;
+}
+</style>
 <div id='there'>
 
 <div>
@@ -63,18 +86,21 @@
     </div>
 
 
-    <a v-for="state in state_list" target="_blank" :href="'/pc/liantang.jianfanginfo?state='+state.key" style="display: inline-block;width: 10em;height:4em;margin:0.3em;text-align: center;background-color: #b2d8eb;">
+    <a class="state-stage" v-for="state in state_list" target="_blank" :href="'/pc/liantang.jianfanginfo?state='+state.key" >
         <div v-text="state.count"></div>
         <div v-text="state.label"></div>
     </a>
 
-    <div id="chart" style="width: 600px;height:400px;"></div>
+    <div style="text-align: center;position: relative;">
+        <div id="chart" style="width: 800px;height:400px;margin: 2em;display: inline-block"></div>
+    </div>
+
 
     <div style="margin-top:2em;">
         <b>当月应急整改</b><span>共计 <span v-text="yinji_total"></span></span>
     </div>
 
-    <div v-for="state in yingji_state_list" style="display: inline-block;width: 10em;height:4em;margin:0.3em;text-align: center;background-color: #b2d8eb">
+    <div v-for="state in yingji_state_list" class="zhenggai-info" >
         <div v-text="state.count"></div>
         <div v-text="state.label"></div>
     </div>
@@ -104,15 +130,17 @@
             },
             legend: {
                 orient: 'vertical',
-                right:'right',
-                data:  state_labels//['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
+                right:'20',
+                top:'20%',
+                data:  state_labels,//['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
+
             },
             series : [
                 {
                     name: '数量',
                     type: 'pie',
                     radius : '55%',
-                    center: ['50%', '60%'],
+                    center: ['30%', '60%'],
 //                    data:[
 //                        {value:335, name:'直接访问'},
 //                        {value:310, name:'邮件营销'},
