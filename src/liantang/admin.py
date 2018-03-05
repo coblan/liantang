@@ -2,7 +2,7 @@
 
 from __future__ import unicode_literals
 from django.contrib import admin
-from helpers.director.shortcut import TablePage,ModelTable,page_dc,FormPage,ModelFields,model_dc,regist_director,TabGroup,RowFilter
+from helpers.director.shortcut import TablePage,ModelTable,page_dc,FormPage,ModelFields,model_dc,regist_director,TabGroup,RowFilter,permit_list
 from .models import JianFangInfo,CunWei,Policy,ApplyTable,YinJiZhengGai
 from helpers.maintenance.update_static_timestamp import js_stamp
 
@@ -135,7 +135,7 @@ class YinJiFormPage(FormPage):
         
         def __init__(self, *args,**kws):
             super(self.__class__,self).__init__(*args,**kws)
-            if not(self.instance.pk):
+            if not self.instance.pk and self.kw.has_key('jianfang_pk'):
                 jianfang_pk = self.kw.get('jianfang_pk')
                 jianfang = JianFangInfo.objects.get(pk = jianfang_pk)
                 self.instance.jianfang = jianfang
@@ -261,3 +261,11 @@ page_dc.update({
     
     'liantang.yinji.edit':YinJiFormPage,
 })
+
+permit_list.append(CunWei)
+permit_list.append(JianFangInfo)
+permit_list.append(YinJiZhengGai)
+permit_list.append(Policy)
+permit_list.append(ApplyTable)
+
+

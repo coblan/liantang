@@ -150,7 +150,7 @@
 <template id="field-uploader">
     <div>
         <div v-for="head in kw.upload_heads">
-            <com-uploader v-model="urls[head.name]" :label="head.label"></com-uploader>
+            <com-uploader v-model="urls[head.name]" :label="head.label" :cfg="{readonly:kw.readonly}"></com-uploader>
         </div>
 
     </div>
@@ -159,7 +159,7 @@
 <script>
     Vue.component('com-uploader',{
         template:'#com-uploader',
-        props:['label','value'],
+        props:['label','value','cfg'],
         data:function(){
             return {
                 inn_value:this.value,
@@ -184,7 +184,7 @@
 <template id="com-uploader">
     <div style="margin: 2em;padding-top: 1em;border-top: 1px solid #bababa;">
         <div style="margin-bottom:1em; "><span v-text="label"></span><span>(PDF/图片)</span></div>
-        <com-file-uploader v-model="inn_value" :config="config"></com-file-uploader>
+        <com-file-uploader v-model="inn_value" :config="config" :readonly="cfg.readonly"></com-file-uploader>
     </div>
 </template>
 
