@@ -15,7 +15,7 @@ class CunWei(models.Model):
     phone=models.CharField('电话号码',max_length=100,blank=True)
     
     def __unicode__(self):
-        return self.name
+        return self.name or '未命名村委'
 
 JIAN_STATE=(
     (1,'镇规保办初审'),
@@ -45,7 +45,7 @@ class JianFangInfo(models.Model):
     xieyi = JsonField(verbose_name='协议',default={},blank=True)
     
     def __unicode__(self):
-        return "%s 建房"%self.name
+        return "%s(建房申请)"%self.name
 
     
 YINGJI_STATE=(
@@ -67,6 +67,8 @@ class YinJiZhengGai(models.Model):
         for k,v in YINGJI_STATE:
             if k==self.state:
                 return v
+    def __unicode__(self):
+        return unicode(self.jianfang)+'.应急整改'
             
 class Policy(models.Model):
     """
@@ -77,7 +79,8 @@ class Policy(models.Model):
     file = models.CharField('文件材料',max_length=500,blank=True,help_text='请选择PDF文件上传')
     
     def __unicode__(self):
-        return self.name
+        return self.name  or '未命名协议'
+
 
 class ApplyTable(models.Model):
     """
@@ -88,5 +91,5 @@ class ApplyTable(models.Model):
     file = models.CharField('文件材料',max_length=500,blank=True,help_text='请选择PDF文件上传')
     
     def __unicode__(self):
-        return self.name    
+        return self.name   or '未命名表格'
     

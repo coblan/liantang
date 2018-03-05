@@ -5,11 +5,17 @@ from django.contrib import admin
 from helpers.director.shortcut import TablePage,ModelTable,page_dc,FormPage,ModelFields,model_dc,regist_director,TabGroup,RowFilter
 from .models import JianFangInfo,CunWei,Policy,ApplyTable,YinJiZhengGai
 from helpers.maintenance.update_static_timestamp import js_stamp
+from helpers.director.page_reverse import page_name
 # Register your models here.
 
 class JianFangInfoTablePage(TablePage):
     template='liantang/jianfang.html'
-
+    def get_path(self):
+        path = [
+            {'label':'建房信息','url':'/pc/xxx'}
+        ]
+        return path
+    
     class JianFangInfoTable(ModelTable):
         model = JianFangInfo
         exclude=['shenqing','xieyi']
@@ -35,9 +41,12 @@ class JianFangInfoTablePage(TablePage):
         
         def get_context(self):
             ls=super(self.__class__,self).get_context()
-            option=[{'value':'has_zhenggai','label':'有违章'},
-                    {'value':'no_zhenggai','label':'无违章'}]
-            ls.append({'name':'zhenggai','label':'违章状态','options':option})
+            option=[
+                    {'value':'no_zhenggai','label':'无整改'},
+                    {'value':'zhenggai_ing','label':'整改中'},
+                    {'value':'zhenggai_over','label':'已整改'},
+            ]
+            ls.append({'name':'zhenggai','label':'应急整改','options':option})
             for dc in ls:
                 if dc['name']=='state':
                     dc['config']={
@@ -48,10 +57,21 @@ class JianFangInfoTablePage(TablePage):
         
         def get_query(self, query):
             yinji = self.filter_args.pop('zhenggai',None)
-            if yinji=='has_zhenggai':
-                query = query.filter(yinjizhenggai__isnull=False)
-            elif yinji=='no_zhenggai':
+            if yinji=='no_zhenggai':
                 query = query.filter(yinjizhenggai__isnull=True)
+            elif yinji=='zhenggai_ing':
+                query = query.filter(yinjizhenggai__isnull=False)
+                query= query.filter(yinjizhenggai__state=1).distinct()
+            elif yinji=='zhenggai_over':
+                query = query.filter(yinjizhenggai__isnull=False)
+                query = query.exclude(yinjizhenggai__state=1).distinct()
+            # if yinji=='zhenggai_ing':
+                # query = query.filter(yinjizhenggai__isnull=False)
+                
+            # if yinji=='has_zhenggai':
+                # query = query.filter(yinjizhenggai__isnull=False)
+            # elif yinji=='no_zhenggai':
+                # query = query.filter(yinjizhenggai__isnull=True)
             return super(self.__class__,self).get_query(query)
         
     
@@ -61,6 +81,7 @@ class JianFangInfoTablePage(TablePage):
 class JianFangInfoFormPage(FormPage):
     # ex_js=('/static/js/inputs_uis.pack.js?t=%s'%js_stamp.inputs_uis_pack_js,)
     template = 'liantang/jianfang_form.html'
+    
     class JianFangInfoForm(ModelFields):
         class Meta:
             model = JianFangInfo
@@ -83,21 +104,26 @@ class JianFangInfoFormPage(FormPage):
                     'orgin_order':True
                 }
             return head
+    
+        
+
 
 
 class YinJiTablePage(TablePage):
     template='liantang/yingji_tab.html'
     page_label='应急整改'
+
     class YinjiTable(ModelTable):
         model=YinJiZhengGai
         exclude=['jianfang','file']
-        # def __init__(self, *args,**kws):
-            # super(self.__class__,self).__init__(*args,**kws)
+        def __init__(self, *args,**kws):
+            ModelTable.__init__(self,*args,**kws)
+            jianfang_pk = self.kw.get('pk')
+            self.jianfang = JianFangInfo.objects.get(pk = jianfang_pk)            
         
         def inn_filter(self, query):
-            jianfang_pk = self.kw.get('pk')
-            jianfang = JianFangInfo.objects.get(pk = jianfang_pk)
-            return query.filter(jianfang=jianfang)
+            
+            return query.filter(jianfang=self.jianfang)
             
 
 class YinJiFormPage(FormPage):
@@ -124,17 +150,29 @@ class YinJiFormPage(FormPage):
             # self.kw
 
 class JianFangGroup(TabGroup):
-    def get_tabs(self):
-        pk =self.request.GET.get('pk')
+    def __init__(self, request):
+        pk =request.GET.get('pk')
         if pk:
-            jianfanginfo = JianFangInfo.objects.get(pk=pk)
-            count = jianfanginfo.yinjizhenggai_set.count()
+            self.jianfanginfo = JianFangInfo.objects.get(pk=pk)
+        else:
+            self.jianfanginfo =None
+        TabGroup.__init__(self,request)
+            
+    def get_tabs(self):
+        if self.jianfanginfo:
+            count = self.jianfanginfo.yinjizhenggai_set.count()
             tabs =[{'name':'blockgroup_normal','label':'基本信息','page_cls':JianFangInfoFormPage},
                    {'name':'blockgroup_map','label':'应急整改(%s)'%count,'page_cls':YinJiTablePage}
               ]
         else:
             tabs=[{'name':'blockgroup_normal','label':'基本信息','page_cls':JianFangInfoFormPage},]
         return tabs
+    
+    def get_label(self):
+        if self.jianfanginfo:
+            return unicode(self.jianfanginfo)
+        else:
+            return '新建建房申请'
 
 
 class CunWeiTablePage(TablePage):

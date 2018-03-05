@@ -3,7 +3,7 @@
 {% load jsonify %}
 
 {% block page_content %}
-<script src='{% static "js/table.pack.js?t=" %}{{ js_stamp.table_pack_js }}'></script>
+<!--<script src='{% static "js/table.pack.js?t=" %}{{ js_stamp.table_pack_js }}'></script>-->
 <script type="text/javascript">
 
     //	row_filters=
@@ -65,7 +65,11 @@
 {% endblock %}
 
 <div id='there'>
-    <path-nav :menu='menu' v-if="!search_args._pop"></path-nav>
+    <ol v-if="page_label" class="breadcrumb">
+        <b v-text="page_label"></b>
+    </ol>
+    <path-nav v-else :menu='menu'></path-nav>
+
     <div class='btn-panel flex flex-sb' style="padding-left:20px; ">
 
         <!--<div v-if="row_filters.length==0" class="flex-grow"></div>-->
@@ -73,7 +77,7 @@
                     :search_tip='search_tip' @submit="search()"></com-filter>
         <div class="flex-grow"></div>
 
-        <com-table-btn v-if="!search_args._pop" :add_new="add_new" :del_item="del_item">
+        <com-table-btn v-if="!search_args._pop" class="table-btn-group" :add_new="add_new" :del_item="del_item" :table_bus="this">
             {% block extra_btn %}
             {% endblock %}
         </com-table-btn>

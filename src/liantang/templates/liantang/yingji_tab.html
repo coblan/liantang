@@ -3,7 +3,7 @@
 {% load jsonify %}
 
 {% block page_content %}
-<script src='{% static "js/table.pack.js?t=" %}{{ js_stamp.table_pack_js }}'></script>
+<!--<script src='{% static "js/table.pack.js?t=" %}{{ js_stamp.table_pack_js }}'></script>-->
 <script type="text/javascript">
 
     //	row_filters=
@@ -43,6 +43,7 @@
 //		        ex:ex,
             tabs:tabs,
             crt_tab:crt_tab,
+            page_label:page_label,
         },
         mounted:function(){
           this.heads[0].type='first_col_next'
@@ -94,7 +95,10 @@
 {% endblock %}
 
 <div id='there'>
-    <path-nav :menu='menu' v-if="!search_args._pop"></path-nav>
+
+    <ol class="breadcrumb">
+        <b v-text="page_label"></b>
+    </ol>
 
     <div class="flex">
         <ul class="nav nav-tabs tabs flex-grow">
@@ -115,7 +119,7 @@
         <div class="flex-grow"></div>
 
 
-        <com-table-btn v-if="!search_args._pop" :add_new="add_new_yinji" :del_item="del_item">
+        <com-table-btn v-if="!search_args._pop" :add_new="add_new_yinji" :del_item="del_item" :table_bus="this">
         </com-table-btn>
 
 

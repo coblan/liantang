@@ -69,8 +69,9 @@
                 }
             },
             after_sub:function(new_row){
-                location = ex.appendSearch({pk:new_row.pk})
-            }
+                location=ex.appendSearch({pk:new_row.pk})
+            },
+
         }
 
     }
@@ -89,9 +90,13 @@
     <div v-if="can_log" style='float: right;padding: 5px 20px;'>
         <a :href="log_url()">日志</a>
     </div>
-    <path-nav :menu='menu'>
-        <li><span>编辑</span></li>
-    </path-nav>
+    <!--<path-nav :menu='menu'>-->
+        <!--<li><span v-text="page_label"></span></li>-->
+    <!--</path-nav>-->
+    <ol class="breadcrumb">
+        <b v-text="page_label"></b>
+    </ol>
+
 
     <div class="flex">
         <ul class="nav nav-tabs tabs flex-grow">
@@ -99,7 +104,7 @@
 
         </ul>
 
-        <com-form-btn :submit="submit" :del_row="del_row" :cancel="cancel"></com-form-btn>
+        <com-form-btn :form_bus="this"></com-form-btn>
 
     </div>
 
