@@ -5,7 +5,7 @@ from django.contrib import admin
 from helpers.director.shortcut import TablePage,ModelTable,page_dc,FormPage,ModelFields,model_dc,regist_director,TabGroup,RowFilter
 from .models import JianFangInfo,CunWei,Policy,ApplyTable,YinJiZhengGai
 from helpers.maintenance.update_static_timestamp import js_stamp
-from helpers.director.page_reverse import page_name
+
 # Register your models here.
 
 class JianFangInfoTablePage(TablePage):
