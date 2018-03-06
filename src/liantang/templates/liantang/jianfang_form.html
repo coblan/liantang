@@ -33,6 +33,7 @@
         {name:'xichan_paper',label:'析产协议'},
     ]
 
+
     ex.each(heads,function(head){
         if(head.name=='shenqing'){
             head.type='field-uploader'
@@ -40,6 +41,11 @@
         }else if(head.name=='xieyi'){
             head.type='field-uploader'
             head.upload_heads = xieyi_heads
+        }else if(head.name=='xiugai'){
+            head.type='field-file-uploader'
+            head.config={
+                com_btn:'file-uploader-btn-plus'
+            }
         }
     })
     form_logic={
@@ -126,6 +132,9 @@
 
     <div class="field-panel">
         <field  key="xieyi" name='xieyi' :kw='kw'></field>
+    </div>
+    <div class="field-panel">
+        <field key="xiugai" name="xiugai" :kw="kw"></field>
     </div>
 </div>
 

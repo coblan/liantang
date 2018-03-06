@@ -18,7 +18,7 @@ class JianFangInfoTablePage(TablePage):
     
     class JianFangInfoTable(ModelTable):
         model = JianFangInfo
-        exclude=['shenqing','xieyi']
+        exclude=['shenqing','xieyi','xiugai']
         def dict_row(self, inst):
             
             return {
@@ -105,9 +105,6 @@ class JianFangInfoFormPage(FormPage):
                 }
             return head
     
-        
-
-
 
 class YinJiTablePage(TablePage):
     template='liantang/yingji_tab.html'

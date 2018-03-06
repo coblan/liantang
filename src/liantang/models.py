@@ -16,8 +16,11 @@ class CunWei(models.Model):
     
     def __unicode__(self):
         return self.name or '未命名村委'
+    class Meta:
+        verbose_name='村委信息表'
 
 JIAN_STATE=(
+    (11,'村委会预审'),
     (1,'镇规保办初审'),
     (2,'联席会议审核'),
     (3,'联合审批(规保办)'),
@@ -43,9 +46,12 @@ class JianFangInfo(models.Model):
     state = models.IntegerField('当前流程',blank=True,choices=JIAN_STATE,null=True)
     shenqing = JsonField(verbose_name='申请材料',default={},blank=True)
     xieyi = JsonField(verbose_name='协议',default={},blank=True)
+    xiugai=models.TextField(verbose_name='申请修改',blank=True,help_text='支持PDF和图片')
     
     def __unicode__(self):
         return "%s(建房申请)"%self.name
+    class Meta:
+        verbose_name='建房信息表'
 
     
 YINGJI_STATE=(
@@ -69,6 +75,8 @@ class YinJiZhengGai(models.Model):
                 return v
     def __unicode__(self):
         return unicode(self.jianfang)+'.应急整改'
+    class Meta:
+        verbose_name='应急整改表'
             
 class Policy(models.Model):
     """
@@ -80,6 +88,8 @@ class Policy(models.Model):
     
     def __unicode__(self):
         return self.name  or '未命名协议'
+    class Meta:
+        verbose_name='申请协议表'
 
 
 class ApplyTable(models.Model):
@@ -92,4 +102,6 @@ class ApplyTable(models.Model):
     
     def __unicode__(self):
         return self.name   or '未命名表格'
+    class Meta:
+        verbose_name='申请表格表'
     
