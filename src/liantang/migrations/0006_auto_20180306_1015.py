@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='jianfanginfo',
             name='xiugai',
-            field=helpers.base.jsonfield.JsonField(blank=True, default={}, verbose_name='\u7533\u8bf7\u4fee\u6539'),
+            field=helpers.base.jsonfield.JsonField(blank=True, verbose_name='\u7533\u8bf7\u4fee\u6539'),
         ),
         migrations.AlterField(
             model_name='applytable',
