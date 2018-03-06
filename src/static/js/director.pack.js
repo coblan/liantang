@@ -401,18 +401,18 @@ var _main2 = __webpack_require__(23);
 
 var table = _interopRequireWildcard(_main2);
 
-var _main3 = __webpack_require__(28);
+var _main3 = __webpack_require__(37);
 
 var uis = _interopRequireWildcard(_main3);
 
-var _main4 = __webpack_require__(42);
+var _main4 = __webpack_require__(51);
 
 var fields = _interopRequireWildcard(_main4);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-__webpack_require__(58);
-__webpack_require__(60);
+__webpack_require__(68);
+__webpack_require__(70);
 
 /***/ }),
 /* 18 */
@@ -605,11 +605,11 @@ __webpack_require__(21);
 
 var field_file_uploader = exports.field_file_uploader = {
     props: ['name', 'row', 'kw'],
-    template: '<div><com-file-uploader v-model="row[name]" :config="kw.config"></com-file-uploader></div>'
+    template: '<div><com-file-uploader v-model="row[name]" :config="kw.config" :readonly="kw.readonly"></com-file-uploader></div>'
 };
 
 var com_file_uploader = exports.com_file_uploader = {
-    props: ['to', 'value', 'config'],
+    props: ['to', 'value', 'readonly', 'config'],
     data: function data() {
 
         return {
@@ -619,7 +619,7 @@ var com_file_uploader = exports.com_file_uploader = {
         };
     },
 
-    template: '<div class="file-uploader">\n\n    <input v-if="cfg.multiple" v-show="!cfg.com_btn" class="pic-input" type="file" @change="upload_pictures($event)" :accept="cfg.accept" multiple="multiple">\n    <input v-else v-show="!cfg.com_btn" class="pic-input" type="file" @change="upload_pictures($event)" :accept="cfg.accept">\n\n    <div class="wrap">\n        <ul class="sortable">\n            <li  v-for="pic in pictures" class="item" >\n                <img v-if="is_image(pic)" :src="pic" alt="" @click="cfg.on_click(pic)"/>\n                <div class="file-wrap" @click="cfg.on_click(pic)" v-else>\n                    <span class="file-type" v-text="get_res_type(pic)"></span>\n                    <!--<span v-text="get_res_basename(pic)"></span>-->\n                </div>\n\n                <span v-show="cfg.multiple" class="remove-btn" title="remove image" @click="remove(pic)">\n                    <!--<i class="fa fa-window-close" aria-hidden="true"></i>-->\n                    <i class="fa fa-times" aria-hidden="true"></i>\n                </span>\n\n            </li>\n        </ul>\n    </div>\n\n\n     <component v-if="cfg.com_btn" :is="cfg.com_btn" @click.native="browse()"></component>\n\n\n\n    </div>',
+    template: '<div class="file-uploader">\n    <div v-if="!readonly">\n        <input v-if="cfg.multiple" v-show="!cfg.com_btn" class="pic-input" type="file" @change="upload_pictures($event)" :accept="cfg.accept" multiple="multiple">\n        <input v-else v-show="!cfg.com_btn" class="pic-input" type="file" @change="upload_pictures($event)" :accept="cfg.accept">\n    </div>\n\n\n    <div class="wrap">\n        <ul class="sortable">\n            <li  v-for="pic in pictures" class="item" >\n                <img v-if="is_image(pic)" :src="pic" alt="" @click="cfg.on_click(pic)"/>\n                <div class="file-wrap" @click="cfg.on_click(pic)" v-else>\n                    <span class="file-type" v-text="get_res_type(pic)"></span>\n                    <!--<span v-text="get_res_basename(pic)"></span>-->\n                </div>\n\n                <span v-if="! readonly" v-show="cfg.multiple" class="remove-btn" title="remove image" @click="remove(pic)">\n                    <!--<i class="fa fa-window-close" aria-hidden="true"></i>-->\n                    <i class="fa fa-times" aria-hidden="true"></i>\n                </span>\n\n            </li>\n        </ul>\n    </div>\n\n\n     <component v-if="cfg.com_btn && ! readonly" :is="cfg.com_btn" @click.native="browse()"></component>\n\n\n\n    </div>',
     mounted: function mounted() {
         var self = this;
         if (this.cfg.sortable) {
@@ -811,41 +811,133 @@ exports.push([module.i, ".file-uploader .item img {\n  max-width: 300px;\n  curs
 "use strict";
 
 
-var _com_table = __webpack_require__(74);
+var _com_table = __webpack_require__(24);
 
 var com_table = _interopRequireWildcard(_com_table);
 
-var _table_fun = __webpack_require__(24);
+var _table_fun = __webpack_require__(25);
 
 var table_fun = _interopRequireWildcard(_table_fun);
 
-var _table_filter = __webpack_require__(25);
+var _table_filter = __webpack_require__(26);
 
 var table_filter = _interopRequireWildcard(_table_filter);
 
-var _table_btn = __webpack_require__(71);
+var _table_btn = __webpack_require__(29);
 
 var table_btn = _interopRequireWildcard(_table_btn);
 
-var _pagenator = __webpack_require__(72);
+var _pagenator = __webpack_require__(30);
 
 var pagenator = _interopRequireWildcard(_pagenator);
 
-var _sort_mark = __webpack_require__(73);
+var _sort_mark = __webpack_require__(31);
 
 var sort_mark = _interopRequireWildcard(_sort_mark);
 
-var _first_col = __webpack_require__(75);
+var _first_col = __webpack_require__(32);
 
 var first_col = _interopRequireWildcard(_first_col);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-__webpack_require__(69);
-__webpack_require__(76);
+__webpack_require__(33);
+__webpack_require__(35);
 
 /***/ }),
 /* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var com_table = {
+    props: {
+        has_check: {},
+        heads: {},
+        rows: {
+            default: function _default() {
+                return [];
+            }
+        },
+        map: {},
+        row_sort: {
+            default: function _default() {
+                return { sort_str: '', sortable: [] };
+            }
+        },
+        value: {}
+    },
+    computed: {
+        selected: {
+            get: function get() {
+                return this.value;
+            },
+            set: function set(v) {
+                this.$emit('input', v);
+            }
+        }
+    },
+    watchs: {
+        selected: function selected(v) {
+            this.$emit('input', v);
+        }
+    },
+    methods: {
+        m_map: function m_map(name, row) {
+            if (this.map) {
+                return this.map(name, row);
+            } else {
+                return row[name];
+            }
+        },
+        is_sorted: function is_sorted(sort_str, name) {
+            var ls = sort_str.split(',');
+            var norm_ls = this.filter_minus(ls);
+            return ex.isin(name, norm_ls);
+        },
+        filter_minus: function filter_minus(array) {
+            return ex.map(array, function (v) {
+                if (v.startsWith('-')) {
+                    return v.slice(1);
+                } else {
+                    return v;
+                }
+            });
+        },
+        is_sortable: function is_sortable(name) {
+            return ex.isin(name, this.row_sort.sortable);
+        },
+        toggle: function toggle(sort_str, name) {
+            var ls = ex.split(sort_str, ',');
+            var norm_ls = this.filter_minus(ls);
+            var idx = norm_ls.indexOf(name);
+            if (idx != -1) {
+                ls[idx] = ls[idx].startsWith('-') ? name : '-' + name;
+            } else {
+                ls.push(name);
+            }
+            return ls.join(',');
+        },
+        toggle_all: function toggle_all(e) {
+            var checked = e.currentTarget.checked;
+            if (checked) {
+                this.selected = ex.map(this.rows, function (row) {
+                    return row.pk;
+                });
+            } else {
+                this.selected = [];
+            }
+        }
+
+    },
+    template: '\t<table>\n\t\t<thead>\n\t\t\t<tr >\n\t\t\t\t<th style=\'width:50px\' v-if=\'has_check\'>\n\t\t\t\t\t<input type="checkbox" name="test" value="" @click="toggle_all($event)"/>\n\t\t\t\t</th>\n\t\t\t\t<th v-for=\'head in heads\' :class=\'["td_"+head.name,{"selected":is_sorted(row_sort.sort_str ,head.name )}]\'>\n\t\t\t\t\t<span v-if=\'is_sortable(head.name)\' v-text=\'head.label\' class=\'clickable\'\n\t\t\t\t\t\t@click=\'row_sort.sort_str = toggle( row_sort.sort_str,head.name)\'></span>\n\t\t\t\t\t<span v-else v-text=\'head.label\'></span>\n\t\t\t\t\t<sort-mark class=\'sort-mark\' v-model=\'row_sort.sort_str\' :name=\'head.name\'></sort-mark>\n\t\t\t\t</th>\n\t\t\t</tr>\n\t\t</thead>\n\t\t<tbody>\n\t\t\t<tr v-for=\'row in rows\'>\n\t\t\t\t<td v-if=\'has_check\'>\n\t\t\t\t\t<input type="checkbox" name="test" :value="row.pk" v-model=\'selected\'/>\n\t\t\t\t</td>\n\t\t\t\t<td v-for=\'head in heads\' :class=\'"td_"+head.name\'>\n\t\t\t\t    <component v-if="head.type" :is="head.type" :name="head.name" :row="row"></component>\n\t\t\t\t\t<span v-else v-html=\'m_map(head.name,row)\'></span>\n\t\t\t\t</td>\n\t\t\t</tr>\n\t\t</tbody>\n\t</table>'
+};
+
+Vue.component('com-table', com_table);
+
+/***/ }),
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1011,7 +1103,7 @@ var table_fun = exports.table_fun = {
 window.table_fun = table_fun;
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1033,7 +1125,7 @@ window.table_fun = table_fun;
  <-<
  */
 
-__webpack_require__(26);
+__webpack_require__(27);
 
 Vue.component('com-filter', {
     props: ['heads', 'search', 'search_tip'],
@@ -1156,13 +1248,13 @@ var sim_filter_with_search = {
 Vue.component('sel-search-filter', sim_filter_with_search);
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(27);
+var content = __webpack_require__(28);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // add the styles to the DOM
 var update = __webpack_require__(1)(content, {});
@@ -1182,7 +1274,7 @@ if(false) {
 }
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)();
@@ -1196,39 +1288,269 @@ exports.push([module.i, ".date-filter {\n  margin: 0 1em; }\n\n.com-filter {\n  
 
 
 /***/ }),
-/* 28 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _expand_menu = __webpack_require__(29);
-
-var f = _interopRequireWildcard(_expand_menu);
-
-var _modal = __webpack_require__(32);
-
-var a = _interopRequireWildcard(_modal);
-
-var _page_tab = __webpack_require__(33);
-
-var page = _interopRequireWildcard(_page_tab);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-__webpack_require__(34);
-__webpack_require__(36);
-__webpack_require__(38);
-__webpack_require__(40);
-
-/***/ }),
 /* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-__webpack_require__(30);
+var com_table_btn = {
+    data: function data() {
+        return {
+            can_add: can_add,
+            can_del: can_del
+        };
+    },
+    props: ['add_new', 'del_item', 'table_bus'],
+    template: '<div class=\'btn-group\'>\n            <slot></slot>\n\t\t\t<button type="button" class="btn btn-success btn-sm" @click=\'add_new()\' v-if=\'can_add\'>\u521B\u5EFA</button>\n\t\t\t<button type="button" class="btn btn-danger btn-sm" @click=\'del_item()\' v-if=\'can_del\' :disabled="table_bus.selected.length==0">\u5220\u9664</button>\n\n\t\t</div>'
+};
+
+Vue.component('com-table-btn', com_table_btn);
+
+/***/ }),
+/* 30 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/*
+ Argments:
+ ==========
+
+ nums = ['1','...','6_a','7','8','...','999']
+
+ Events:
+ =======
+
+ goto_page,num
+
+ */
+
+Vue.component('paginator', {
+    props: ['nums', 'crt', 'set'],
+    data: function data() {
+        return {
+            input_num: this.crt || 1
+        };
+    },
+
+    methods: {
+        goto_page: function goto_page(num) {
+            if (!isNaN(parseInt(num))) {
+                this.$emit('goto_page', num);
+            }
+        }
+    },
+    template: ex.template('\n    <div class="paginator">\n    <ul class="pagination page-num">\n    <li v-for=\'num in nums\' track-by="$index" :class=\'{"clickable": !isNaN(parseInt(num))}\' @click=\'goto_page(num)\'>\n    <span v-text=\'!isNaN(parseInt(num))? parseInt(num):num\' :class=\'{"active":parseInt(num) ==parseInt(crt)}\'></span>\n    </li>\n    </ul>\n    <div v-if="set==\'jump\'" class="page-input-block">\n        <input type="text" v-model="input_num"/>\n        <button type="button" class="btn btn-success btn-xs" @click="goto_page(input_num)">{jump}</button>\n    </div>\n    </div>\n    ', ex.trList(['jump']))
+});
+
+/***/ }),
+/* 31 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Vue.component('sort-mark', {
+    props: ['value', 'name'],
+    data: function data() {
+        return {
+            index: -1,
+            sort_str: this.value
+        };
+    },
+    //mixins:[table_fun],
+    template: '<span class=\'sort-mark\'>\n\t\t\t<span v-if=\'index>0\' v-text=\'index\'></span>\n\t\t\t<img v-if=\'status=="up"\' src=\'http://res.enjoyst.com/image/up_01.png\'\n\t\t\t\t\t @click=\'sort_str=toggle(sort_str,name);$emit("input",sort_str)\'/>\n\t\t\t<img v-if=\'status=="down"\' src=\'http://res.enjoyst.com/image/down_01.png\'\n\t\t\t\t\t @click=\'sort_str=toggle(sort_str,name);$emit("input",sort_str)\'/>\n\t\t\t<img v-if=\'status!="no_sort"\' src=\'http://res.enjoyst.com/image/cross.png\'\n\t\t\t\t\t@click=\'sort_str=remove_sort(sort_str,name);$emit("input",sort_str)\'/>\n\t\t\t</span>\n\t',
+    computed: {
+        status: function status() {
+            var sorted = this.value.split(',');
+            for (var x = 0; x < sorted.length; x++) {
+                var org_name = sorted[x];
+                if (org_name.startsWith('-')) {
+                    var name = org_name.slice(1);
+                    var minus = 'up';
+                } else {
+                    var name = org_name;
+                    var minus = 'down';
+                }
+                if (name == this.name) {
+                    this.index = x + 1;
+                    return minus;
+                }
+            }
+            return 'no_sort';
+        }
+    }
+    //methods:{
+
+    //	get_status:function () {
+    //		var sorted=this.sort_str.split(',')
+    //		for(var x=0;x<sorted.length;x++){
+    //			var org_name=sorted[x]
+    //			if(org_name.startsWith('-')){
+    //				var name=org_name.slice(1)
+    //				var minus='up'
+    //			}else{
+    //				var name=org_name
+    //				var minus='down'
+    //			}
+    //			if(name==this.name){
+    //				this.index=x+1
+    //				return minus
+    //			}
+    //		}
+    //		return 'no_sort'
+    //	}
+    //}
+
+});
+
+/***/ }),
+/* 32 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/*
+以后都不用这个组件了。现在暂时放在这里
+* */
+
+var first_col = {
+    props: ['row', 'name'],
+    methods: {
+        ret: function ret(row) {
+            ln.ret(row);
+        },
+        form_link: function form_link(name, row) {
+            return ex.template('{edit}?pk={pk}', { edit: page_name + '.edit',
+                pk: row.pk
+            });
+        },
+        is_pop: function is_pop() {
+            return search_args._pop;
+        }
+    },
+    template: '<div>\n    <span v-if="is_pop()"  v-text="row[name]" @click="ret(row)" style="cursor: pointer;color: #5d9cd3"></span>\n    <a v-else :href="form_link(name,row)" v-text="row[name]"></a>\n    </div>'
+};
+
+Vue.component('first-col', first_col);
+
+/***/ }),
+/* 33 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(34);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// add the styles to the DOM
+var update = __webpack_require__(1)(content, {});
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../../../../../../../../coblan/webcode/node_modules/css-loader/index.js!../../../../../../../../../coblan/webcode/node_modules/sass-loader/lib/loader.js!./table_btn_group.scss", function() {
+			var newContent = require("!!../../../../../../../../../coblan/webcode/node_modules/css-loader/index.js!../../../../../../../../../coblan/webcode/node_modules/sass-loader/lib/loader.js!./table_btn_group.scss");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 34 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)();
+// imports
+
+
+// module
+exports.push([module.i, ".table-btn-group {\n  min-width: 9em; }\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 35 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(36);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// add the styles to the DOM
+var update = __webpack_require__(1)(content, {});
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../../../../../../../../coblan/webcode/node_modules/css-loader/index.js!../../../../../../../../../coblan/webcode/node_modules/sass-loader/lib/loader.js!./table.scss", function() {
+			var newContent = require("!!../../../../../../../../../coblan/webcode/node_modules/css-loader/index.js!../../../../../../../../../coblan/webcode/node_modules/sass-loader/lib/loader.js!./table.scss");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 36 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)();
+// imports
+
+
+// module
+exports.push([module.i, "table.fake-suit {\n  border: 1px solid #DDD;\n  border-radius: 6px; }\n  table.fake-suit th {\n    font-weight: bold;\n    background-color: #e5e5e5;\n    background-image: linear-gradient(to bottom, #f3f3f3, #e5e5e5); }\n  table.fake-suit td {\n    border-left: 1px solid #F5F5F5; }\n  table.fake-suit tr > td:first-child {\n    border-left: none; }\n  table.fake-suit tbody tr {\n    background-color: white; }\n  table.fake-suit tbody td {\n    border-top: 1px solid #E7E7E7;\n    padding-top: 3px;\n    padding-bottom: 3px; }\n  table.fake-suit tbody tr:nth-child(even) {\n    background-color: #FAFAFA; }\n  table.fake-suit tbody tr:hover {\n    background-color: #F5F5F5; }\n\n.paginator input {\n  width: 20px; }\n\n.paginator .page-input-block {\n  display: inline-block; }\n\n.paginator button {\n  vertical-align: top; }\n\n.sort-mark img {\n  width: 10px; }\n\nul.pagination li {\n  display: inline;\n  cursor: pointer; }\n\nul.pagination li span {\n  color: black;\n  float: left;\n  padding: 4px 10px;\n  text-decoration: none;\n  border: 1px solid #ddd; }\n\nul.pagination li span.active {\n  background-color: #4CAF50;\n  color: white; }\n\nul.pagination li span:hover:not(.active) {\n  background-color: #ddd; }\n\n.com-filter .date-filter {\n  padding-left: 10px; }\n  .com-filter .date-filter span {\n    padding-left: 5px; }\n  .com-filter .date-filter .datetime-picker {\n    min-width: 10em;\n    max-width: 14em; }\n\n.clickable {\n  cursor: pointer;\n  color: #39718e; }\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 37 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _expand_menu = __webpack_require__(38);
+
+var f = _interopRequireWildcard(_expand_menu);
+
+var _modal = __webpack_require__(41);
+
+var a = _interopRequireWildcard(_modal);
+
+var _page_tab = __webpack_require__(42);
+
+var page = _interopRequireWildcard(_page_tab);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+__webpack_require__(43);
+__webpack_require__(45);
+__webpack_require__(47);
+__webpack_require__(49);
+
+/***/ }),
+/* 38 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+__webpack_require__(39);
 var template_str = '\n<div class=\'_expand_menu\'>\n\t<ul>\n\t\t<li v-for=\'act in normed_menu\'>\n\t\t\t<a :class=\'["menu_item",{"selected":act.selected,"opened_submenu":opened_submenu==act.submenu}]\' \n\t\t\t\t:href=\'act.submenu?"javascript:void(0)":act.url\'\n\t\t\t\t@click=\'main_act_click(act)\'>\n\t\t\t\t<span v-html=\'act.icon\' class=\'_icon\'></span><span v-text=\'act.label\'></span>\n\t\t\t\t<span v-show="act.submenu">\n\t\t\t\t\t<span v-if="opened_submenu==act.submenu ||act.selected">[-]</span>\n\t\t\t\t\t<span v-else>[+]</span>\n\t\t\t\t</span>\n\t\t\t\t<span class=\'left-arrow\' v-if=\'act.selected\'></span>\n\t\t\t</a>\n\t\t\t\n\t\t\t<ul class=\'submenu\' v-show=\'opened_submenu==act.submenu ||act.selected\' transition="expand">\n\t\t\t\t<li v-for=\'sub_act in act.submenu\' :class=\'{"active":sub_act.active}\'>\n\t\t\t\t\t<a :href=\'sub_act.url\' class=\'sub_item\'>\n\t\t\t\t\t\t<span v-text=\'sub_act.label\'></span>\n\t\t\t\t\t</a>\n\t\t\t\t\t\n\t\t\t\t</li>\n\t\t\t</ul>\n\t\t</li>\n\t</ul>\n</div>\n';
 
 Vue.component('expand_menu', {
@@ -1326,13 +1648,13 @@ Vue.component('expand_menu', {
 //})
 
 /***/ }),
-/* 30 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(31);
+var content = __webpack_require__(40);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // add the styles to the DOM
 var update = __webpack_require__(1)(content, {});
@@ -1352,7 +1674,7 @@ if(false) {
 }
 
 /***/ }),
-/* 31 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)();
@@ -1366,7 +1688,7 @@ exports.push([module.i, "._expand_menu {\n  background-color: #364150; }\n  ._ex
 
 
 /***/ }),
-/* 32 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1417,7 +1739,7 @@ Vue.component('modal', {
 	} });
 
 /***/ }),
-/* 33 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1431,13 +1753,13 @@ Vue.component('page-tab', {
 document.write('\n <style type="text/css" media="screen" id="test">\n.inst-menu{\n\t\tmargin: 30px auto;\n\t\tborder-bottom: 1px solid #DADCDE;\n\t}\n.inst-menu li{\n\tdisplay: inline-block;\n\tpadding: 10px 20px;\n\tfont-size: 16px;\n}\n.inst-menu li:hover{\n\tcursor: pointer;\n}\n.inst-menu .active{\n\tborder-bottom: 5px solid #0092F2;\n\tcolor: #0092F2;\n}\n</style>\n');
 
 /***/ }),
-/* 34 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(35);
+var content = __webpack_require__(44);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // add the styles to the DOM
 var update = __webpack_require__(1)(content, {});
@@ -1457,7 +1779,7 @@ if(false) {
 }
 
 /***/ }),
-/* 35 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)();
@@ -1471,13 +1793,13 @@ exports.push([module.i, ".flex {\n  display: flex; }\n\n.flex-v {\n  display: fl
 
 
 /***/ }),
-/* 36 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(37);
+var content = __webpack_require__(46);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // add the styles to the DOM
 var update = __webpack_require__(1)(content, {});
@@ -1497,7 +1819,7 @@ if(false) {
 }
 
 /***/ }),
-/* 37 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)();
@@ -1511,13 +1833,13 @@ exports.push([module.i, ".checkbox {\n  padding-left: 20px; }\n\n.checkbox label
 
 
 /***/ }),
-/* 38 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(39);
+var content = __webpack_require__(48);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // add the styles to the DOM
 var update = __webpack_require__(1)(content, {});
@@ -1537,7 +1859,7 @@ if(false) {
 }
 
 /***/ }),
-/* 39 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)();
@@ -1551,13 +1873,13 @@ exports.push([module.i, "template {\n  display: none; }\n\nhtml, body {\n  heigh
 
 
 /***/ }),
-/* 40 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(41);
+var content = __webpack_require__(50);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // add the styles to the DOM
 var update = __webpack_require__(1)(content, {});
@@ -1577,7 +1899,7 @@ if(false) {
 }
 
 /***/ }),
-/* 41 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)();
@@ -1591,7 +1913,7 @@ exports.push([module.i, "@charset \"UTF-8\";\n.center-vh {\n  position: absolute
 
 
 /***/ }),
-/* 42 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1602,37 +1924,37 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.merge = merge;
 
-var _ajax_fun = __webpack_require__(43);
+var _ajax_fun = __webpack_require__(52);
 
-var _file = __webpack_require__(44);
+var _file = __webpack_require__(53);
 
 var f = _interopRequireWildcard(_file);
 
-var _ckeditor = __webpack_require__(47);
+var _ckeditor = __webpack_require__(56);
 
 var ck = _interopRequireWildcard(_ckeditor);
 
-var _multi_sel = __webpack_require__(48);
+var _multi_sel = __webpack_require__(57);
 
 var multi = _interopRequireWildcard(_multi_sel);
 
-var _inputs = __webpack_require__(49);
+var _inputs = __webpack_require__(58);
 
 var inputs = _interopRequireWildcard(_inputs);
 
-var _link = __webpack_require__(50);
+var _link = __webpack_require__(59);
 
 var ln = _interopRequireWildcard(_link);
 
-var _com_form_btn = __webpack_require__(68);
+var _com_form_btn = __webpack_require__(62);
 
 var form_btn = _interopRequireWildcard(_com_form_btn);
 
-var _fields_base = __webpack_require__(53);
+var _fields_base = __webpack_require__(63);
 
-var _field_fun = __webpack_require__(54);
+var _field_fun = __webpack_require__(64);
 
-var _order = __webpack_require__(55);
+var _order = __webpack_require__(65);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -1684,7 +2006,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 //import {use_color} from '../dosome/color.js'
 //import {load_js,load_css} from '../dosome/pkg.js'
-__webpack_require__(56);
+__webpack_require__(66);
 //import * as fb from './field_base.js'
 //import * as js from './adapt.js'
 
@@ -1817,7 +2139,7 @@ window.merge = merge;
 window.order_by_key = _order.order_by_key;
 
 /***/ }),
-/* 43 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1937,7 +2259,7 @@ if (!window.__uploading_mark) {
 }
 
 /***/ }),
-/* 44 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2041,7 +2363,7 @@ img-uploador
 <<<<
 */
 
-__webpack_require__(45);
+__webpack_require__(54);
 
 var fl = {
     read: function read(file, callback) {
@@ -2425,13 +2747,13 @@ Vue.component('logo-input', {
 window.fl = fl;
 
 /***/ }),
-/* 45 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(46);
+var content = __webpack_require__(55);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // add the styles to the DOM
 var update = __webpack_require__(1)(content, {});
@@ -2451,7 +2773,7 @@ if(false) {
 }
 
 /***/ }),
-/* 46 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)();
@@ -2465,7 +2787,7 @@ exports.push([module.i, ".img-uploader input {\n  display: none; }\n\n.img-uploa
 
 
 /***/ }),
-/* 47 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2634,7 +2956,7 @@ var edit_level = {
 };
 
 /***/ }),
-/* 48 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2721,7 +3043,7 @@ Vue.component('tow-col-sel', {
 });
 
 /***/ }),
-/* 49 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3005,7 +3327,7 @@ var check_box = {
 Vue.component('com-check-box', check_box);
 
 /***/ }),
-/* 50 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3083,7 +3405,7 @@ popUrlListen:
 <-<
  */
 
-__webpack_require__(51);
+__webpack_require__(60);
 
 var ln = {
     history_handle: function history_handle(obj) {
@@ -3305,13 +3627,13 @@ var ln = {
 window.ln = ln;
 
 /***/ }),
-/* 51 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(52);
+var content = __webpack_require__(61);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // add the styles to the DOM
 var update = __webpack_require__(1)(content, {});
@@ -3331,7 +3653,7 @@ if(false) {
 }
 
 /***/ }),
-/* 52 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)();
@@ -3345,7 +3667,37 @@ exports.push([module.i, "@charset \"UTF-8\";\n#_load_frame_wrap {\n  position: f
 
 
 /***/ }),
-/* 53 */
+/* 62 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Vue.component('com-form-btn', {
+    data: function data() {
+        return {
+            can_add: can_add,
+            can_del: can_del
+        };
+    },
+    props: ['form_bus'],
+    computed: {
+        del_link: function del_link() {
+            return this.form_bus.del_row();
+        }
+    },
+    //template:`<div style='overflow: hidden;'>
+    //	<div class="btn-group" style='float: right;'>
+    //		<button type="button" class="btn btn-default" @click='submit()' v-if='can_add'>保存</button>
+    //		<a type="button" class="btn btn-default" v-if='can_del &&del_link' :href='del_link'>删除</a>
+    //		<button type="button" class="btn btn-default" @click='cancel()' >取消</button>
+    //	</div>
+    //</div>`
+    template: '<div style="min-height: 1.5em;">\n    <div style="float: right;">\n        <div class="btn-group">\n            <button type="button" class="btn btn-success" @click=\'form_bus.submit_return()\' v-if=\'can_add\'>\u4FDD\u5B58\u5E76\u8FD4\u56DE</button>\n            <button type="button" class="btn btn-default" @click=\'submit()\' v-if=\'can_add\'>\u4FDD\u5B58</button>\n            <button type="button" class="btn btn-default" @click=\'form_bus.goto_next()\' >\u53D6\u6D88</button>\n        </div>\n        <!--<div class="btn-group" >-->\n          <!--<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->\n                <!--\u5176\u4ED6 <span class="caret"></span>-->\n              <!--</button>-->\n              <!--<ul class="dropdown-menu">-->\n                <!--&lt;!&ndash;<li><a href="#" @click=\'form_bus.submit()\' v-if=\'can_add\'>\u4FDD\u5B58</a></li>&ndash;&gt;-->\n                <!--<li><a v-if=\'can_del &&del_link\' :href=\'form_bus.del_row()\'>\u5220\u9664</a></li>-->\n\n                <!--&lt;!&ndash;<li role="separator" class="divider"></li>&ndash;&gt;-->\n              <!--</ul>-->\n        <!--</div>-->\n    </div>\n\n</div>'
+});
+
+/***/ }),
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3618,7 +3970,7 @@ var field_base = exports.field_base = {
 };
 
 /***/ }),
-/* 54 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3746,7 +4098,7 @@ var field_fun = exports.field_fun = {
 window.field_fun = field_fun;
 
 /***/ }),
-/* 55 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3784,13 +4136,13 @@ function order_by_key(array, key) {
 }
 
 /***/ }),
-/* 56 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(57);
+var content = __webpack_require__(67);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // add the styles to the DOM
 var update = __webpack_require__(1)(content, {});
@@ -3810,7 +4162,7 @@ if(false) {
 }
 
 /***/ }),
-/* 57 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)();
@@ -3824,13 +4176,13 @@ exports.push([module.i, ".error {\n  color: red; }\n\n.field-panel {\n  backgrou
 
 
 /***/ }),
-/* 58 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(59);
+var content = __webpack_require__(69);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // add the styles to the DOM
 var update = __webpack_require__(1)(content, {});
@@ -3850,7 +4202,7 @@ if(false) {
 }
 
 /***/ }),
-/* 59 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)();
@@ -3864,13 +4216,13 @@ exports.push([module.i, ".scss-comment {\n  content: 'director/scss/tab_group.sc
 
 
 /***/ }),
-/* 60 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(61);
+var content = __webpack_require__(71);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // add the styles to the DOM
 var update = __webpack_require__(1)(content, {});
@@ -3890,7 +4242,7 @@ if(false) {
 }
 
 /***/ }),
-/* 61 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)();
@@ -3899,364 +4251,6 @@ exports = module.exports = __webpack_require__(0)();
 
 // module
 exports.push([module.i, ".head-item {\n  display: inline-block; }\n  .head-item.brand {\n    font-size: 150%;\n    width: 10em;\n    padding: 0.3em 1em; }\n\n#menu ._expand_menu {\n  margin-top: 1em; }\n  #menu ._expand_menu > ul > li {\n    margin-bottom: 0.2em; }\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 62 */,
-/* 63 */,
-/* 64 */,
-/* 65 */,
-/* 66 */,
-/* 67 */,
-/* 68 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Vue.component('com-form-btn', {
-    data: function data() {
-        return {
-            can_add: can_add,
-            can_del: can_del
-        };
-    },
-    props: ['form_bus'],
-    computed: {
-        del_link: function del_link() {
-            return this.form_bus.del_row();
-        }
-    },
-    //template:`<div style='overflow: hidden;'>
-    //	<div class="btn-group" style='float: right;'>
-    //		<button type="button" class="btn btn-default" @click='submit()' v-if='can_add'>保存</button>
-    //		<a type="button" class="btn btn-default" v-if='can_del &&del_link' :href='del_link'>删除</a>
-    //		<button type="button" class="btn btn-default" @click='cancel()' >取消</button>
-    //	</div>
-    //</div>`
-    template: '<div style="min-height: 1.5em;">\n    <div style="float: right;">\n        <div class="btn-group">\n            <button type="button" class="btn btn-success" @click=\'form_bus.submit_return()\' v-if=\'can_add\'>\u4FDD\u5B58\u5E76\u8FD4\u56DE</button>\n            <button type="button" class="btn btn-default" @click=\'submit()\' v-if=\'can_add\'>\u4FDD\u5B58</button>\n            <button type="button" class="btn btn-default" @click=\'form_bus.goto_next()\' >\u53D6\u6D88</button>\n        </div>\n        <!--<div class="btn-group" >-->\n          <!--<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->\n                <!--\u5176\u4ED6 <span class="caret"></span>-->\n              <!--</button>-->\n              <!--<ul class="dropdown-menu">-->\n                <!--&lt;!&ndash;<li><a href="#" @click=\'form_bus.submit()\' v-if=\'can_add\'>\u4FDD\u5B58</a></li>&ndash;&gt;-->\n                <!--<li><a v-if=\'can_del &&del_link\' :href=\'form_bus.del_row()\'>\u5220\u9664</a></li>-->\n\n                <!--&lt;!&ndash;<li role="separator" class="divider"></li>&ndash;&gt;-->\n              <!--</ul>-->\n        <!--</div>-->\n    </div>\n\n</div>'
-});
-
-/***/ }),
-/* 69 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(70);
-if(typeof content === 'string') content = [[module.i, content, '']];
-// add the styles to the DOM
-var update = __webpack_require__(1)(content, {});
-if(content.locals) module.exports = content.locals;
-// Hot Module Replacement
-if(false) {
-	// When the styles change, update the <style> tags
-	if(!content.locals) {
-		module.hot.accept("!!../../../../../../../../../coblan/webcode/node_modules/css-loader/index.js!../../../../../../../../../coblan/webcode/node_modules/sass-loader/lib/loader.js!./table_btn_group.scss", function() {
-			var newContent = require("!!../../../../../../../../../coblan/webcode/node_modules/css-loader/index.js!../../../../../../../../../coblan/webcode/node_modules/sass-loader/lib/loader.js!./table_btn_group.scss");
-			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-			update(newContent);
-		});
-	}
-	// When the module is disposed, remove the <style> tags
-	module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 70 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(0)();
-// imports
-
-
-// module
-exports.push([module.i, ".table-btn-group {\n  min-width: 9em; }\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 71 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var com_table_btn = {
-    data: function data() {
-        return {
-            can_add: can_add,
-            can_del: can_del
-        };
-    },
-    props: ['add_new', 'del_item', 'table_bus'],
-    template: '<div class=\'btn-group\'>\n            <slot></slot>\n\t\t\t<button type="button" class="btn btn-success btn-sm" @click=\'add_new()\' v-if=\'can_add\'>\u521B\u5EFA</button>\n\t\t\t<button type="button" class="btn btn-danger btn-sm" @click=\'del_item()\' v-if=\'can_del\' :disabled="table_bus.selected.length==0">\u5220\u9664</button>\n\n\t\t</div>'
-};
-
-Vue.component('com-table-btn', com_table_btn);
-
-/***/ }),
-/* 72 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/*
- Argments:
- ==========
-
- nums = ['1','...','6_a','7','8','...','999']
-
- Events:
- =======
-
- goto_page,num
-
- */
-
-Vue.component('paginator', {
-    props: ['nums', 'crt', 'set'],
-    data: function data() {
-        return {
-            input_num: this.crt || 1
-        };
-    },
-
-    methods: {
-        goto_page: function goto_page(num) {
-            if (!isNaN(parseInt(num))) {
-                this.$emit('goto_page', num);
-            }
-        }
-    },
-    template: ex.template('\n    <div class="paginator">\n    <ul class="pagination page-num">\n    <li v-for=\'num in nums\' track-by="$index" :class=\'{"clickable": !isNaN(parseInt(num))}\' @click=\'goto_page(num)\'>\n    <span v-text=\'!isNaN(parseInt(num))? parseInt(num):num\' :class=\'{"active":parseInt(num) ==parseInt(crt)}\'></span>\n    </li>\n    </ul>\n    <div v-if="set==\'jump\'" class="page-input-block">\n        <input type="text" v-model="input_num"/>\n        <button type="button" class="btn btn-success btn-xs" @click="goto_page(input_num)">{jump}</button>\n    </div>\n    </div>\n    ', ex.trList(['jump']))
-});
-
-/***/ }),
-/* 73 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Vue.component('sort-mark', {
-    props: ['value', 'name'],
-    data: function data() {
-        return {
-            index: -1,
-            sort_str: this.value
-        };
-    },
-    //mixins:[table_fun],
-    template: '<span class=\'sort-mark\'>\n\t\t\t<span v-if=\'index>0\' v-text=\'index\'></span>\n\t\t\t<img v-if=\'status=="up"\' src=\'http://res.enjoyst.com/image/up_01.png\'\n\t\t\t\t\t @click=\'sort_str=toggle(sort_str,name);$emit("input",sort_str)\'/>\n\t\t\t<img v-if=\'status=="down"\' src=\'http://res.enjoyst.com/image/down_01.png\'\n\t\t\t\t\t @click=\'sort_str=toggle(sort_str,name);$emit("input",sort_str)\'/>\n\t\t\t<img v-if=\'status!="no_sort"\' src=\'http://res.enjoyst.com/image/cross.png\'\n\t\t\t\t\t@click=\'sort_str=remove_sort(sort_str,name);$emit("input",sort_str)\'/>\n\t\t\t</span>\n\t',
-    computed: {
-        status: function status() {
-            var sorted = this.value.split(',');
-            for (var x = 0; x < sorted.length; x++) {
-                var org_name = sorted[x];
-                if (org_name.startsWith('-')) {
-                    var name = org_name.slice(1);
-                    var minus = 'up';
-                } else {
-                    var name = org_name;
-                    var minus = 'down';
-                }
-                if (name == this.name) {
-                    this.index = x + 1;
-                    return minus;
-                }
-            }
-            return 'no_sort';
-        }
-    }
-    //methods:{
-
-    //	get_status:function () {
-    //		var sorted=this.sort_str.split(',')
-    //		for(var x=0;x<sorted.length;x++){
-    //			var org_name=sorted[x]
-    //			if(org_name.startsWith('-')){
-    //				var name=org_name.slice(1)
-    //				var minus='up'
-    //			}else{
-    //				var name=org_name
-    //				var minus='down'
-    //			}
-    //			if(name==this.name){
-    //				this.index=x+1
-    //				return minus
-    //			}
-    //		}
-    //		return 'no_sort'
-    //	}
-    //}
-
-});
-
-/***/ }),
-/* 74 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var com_table = {
-    props: {
-        has_check: {},
-        heads: {},
-        rows: {
-            default: function _default() {
-                return [];
-            }
-        },
-        map: {},
-        row_sort: {
-            default: function _default() {
-                return { sort_str: '', sortable: [] };
-            }
-        },
-        value: {}
-    },
-    computed: {
-        selected: {
-            get: function get() {
-                return this.value;
-            },
-            set: function set(v) {
-                this.$emit('input', v);
-            }
-        }
-    },
-    watchs: {
-        selected: function selected(v) {
-            this.$emit('input', v);
-        }
-    },
-    methods: {
-        m_map: function m_map(name, row) {
-            if (this.map) {
-                return this.map(name, row);
-            } else {
-                return row[name];
-            }
-        },
-        is_sorted: function is_sorted(sort_str, name) {
-            var ls = sort_str.split(',');
-            var norm_ls = this.filter_minus(ls);
-            return ex.isin(name, norm_ls);
-        },
-        filter_minus: function filter_minus(array) {
-            return ex.map(array, function (v) {
-                if (v.startsWith('-')) {
-                    return v.slice(1);
-                } else {
-                    return v;
-                }
-            });
-        },
-        is_sortable: function is_sortable(name) {
-            return ex.isin(name, this.row_sort.sortable);
-        },
-        toggle: function toggle(sort_str, name) {
-            var ls = ex.split(sort_str, ',');
-            var norm_ls = this.filter_minus(ls);
-            var idx = norm_ls.indexOf(name);
-            if (idx != -1) {
-                ls[idx] = ls[idx].startsWith('-') ? name : '-' + name;
-            } else {
-                ls.push(name);
-            }
-            return ls.join(',');
-        },
-        toggle_all: function toggle_all(e) {
-            var checked = e.currentTarget.checked;
-            if (checked) {
-                this.selected = ex.map(this.rows, function (row) {
-                    return row.pk;
-                });
-            } else {
-                this.selected = [];
-            }
-        }
-
-    },
-    template: '\t<table>\n\t\t<thead>\n\t\t\t<tr >\n\t\t\t\t<th style=\'width:50px\' v-if=\'has_check\'>\n\t\t\t\t\t<input type="checkbox" name="test" value="" @click="toggle_all($event)"/>\n\t\t\t\t</th>\n\t\t\t\t<th v-for=\'head in heads\' :class=\'["td_"+head.name,{"selected":is_sorted(row_sort.sort_str ,head.name )}]\'>\n\t\t\t\t\t<span v-if=\'is_sortable(head.name)\' v-text=\'head.label\' class=\'clickable\'\n\t\t\t\t\t\t@click=\'row_sort.sort_str = toggle( row_sort.sort_str,head.name)\'></span>\n\t\t\t\t\t<span v-else v-text=\'head.label\'></span>\n\t\t\t\t\t<sort-mark class=\'sort-mark\' v-model=\'row_sort.sort_str\' :name=\'head.name\'></sort-mark>\n\t\t\t\t</th>\n\t\t\t</tr>\n\t\t</thead>\n\t\t<tbody>\n\t\t\t<tr v-for=\'row in rows\'>\n\t\t\t\t<td v-if=\'has_check\'>\n\t\t\t\t\t<input type="checkbox" name="test" :value="row.pk" v-model=\'selected\'/>\n\t\t\t\t</td>\n\t\t\t\t<td v-for=\'head in heads\' :class=\'"td_"+head.name\'>\n\t\t\t\t    <component v-if="head.type" :is="head.type" :name="head.name" :row="row"></component>\n\t\t\t\t\t<span v-else v-html=\'m_map(head.name,row)\'></span>\n\t\t\t\t</td>\n\t\t\t</tr>\n\t\t</tbody>\n\t</table>'
-};
-
-Vue.component('com-table', com_table);
-
-/***/ }),
-/* 75 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/*
-以后都不用这个组件了。现在暂时放在这里
-* */
-
-var first_col = {
-    props: ['row', 'name'],
-    methods: {
-        ret: function ret(row) {
-            ln.ret(row);
-        },
-        form_link: function form_link(name, row) {
-            return ex.template('{edit}?pk={pk}', { edit: page_name + '.edit',
-                pk: row.pk
-            });
-        },
-        is_pop: function is_pop() {
-            return search_args._pop;
-        }
-    },
-    template: '<div>\n    <span v-if="is_pop()"  v-text="row[name]" @click="ret(row)" style="cursor: pointer;color: #5d9cd3"></span>\n    <a v-else :href="form_link(name,row)" v-text="row[name]"></a>\n    </div>'
-};
-
-Vue.component('first-col', first_col);
-
-/***/ }),
-/* 76 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(77);
-if(typeof content === 'string') content = [[module.i, content, '']];
-// add the styles to the DOM
-var update = __webpack_require__(1)(content, {});
-if(content.locals) module.exports = content.locals;
-// Hot Module Replacement
-if(false) {
-	// When the styles change, update the <style> tags
-	if(!content.locals) {
-		module.hot.accept("!!../../../../../../../../../coblan/webcode/node_modules/css-loader/index.js!../../../../../../../../../coblan/webcode/node_modules/sass-loader/lib/loader.js!./table.scss", function() {
-			var newContent = require("!!../../../../../../../../../coblan/webcode/node_modules/css-loader/index.js!../../../../../../../../../coblan/webcode/node_modules/sass-loader/lib/loader.js!./table.scss");
-			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-			update(newContent);
-		});
-	}
-	// When the module is disposed, remove the <style> tags
-	module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 77 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(0)();
-// imports
-
-
-// module
-exports.push([module.i, "table.fake-suit {\n  border: 1px solid #DDD;\n  border-radius: 6px; }\n  table.fake-suit th {\n    font-weight: bold;\n    background-color: #e5e5e5;\n    background-image: linear-gradient(to bottom, #f3f3f3, #e5e5e5); }\n  table.fake-suit td {\n    border-left: 1px solid #F5F5F5; }\n  table.fake-suit tr > td:first-child {\n    border-left: none; }\n  table.fake-suit tbody tr {\n    background-color: white; }\n  table.fake-suit tbody td {\n    border-top: 1px solid #E7E7E7;\n    padding-top: 3px;\n    padding-bottom: 3px; }\n  table.fake-suit tbody tr:nth-child(even) {\n    background-color: #FAFAFA; }\n  table.fake-suit tbody tr:hover {\n    background-color: #F5F5F5; }\n\n.paginator input {\n  width: 20px; }\n\n.paginator .page-input-block {\n  display: inline-block; }\n\n.paginator button {\n  vertical-align: top; }\n\n.sort-mark img {\n  width: 10px; }\n\nul.pagination li {\n  display: inline;\n  cursor: pointer; }\n\nul.pagination li span {\n  color: black;\n  float: left;\n  padding: 4px 10px;\n  text-decoration: none;\n  border: 1px solid #ddd; }\n\nul.pagination li span.active {\n  background-color: #4CAF50;\n  color: white; }\n\nul.pagination li span:hover:not(.active) {\n  background-color: #ddd; }\n\n.com-filter .date-filter {\n  padding-left: 10px; }\n  .com-filter .date-filter span {\n    padding-left: 5px; }\n  .com-filter .date-filter .datetime-picker {\n    min-width: 10em;\n    max-width: 14em; }\n\n.clickable {\n  cursor: pointer;\n  color: #39718e; }\n", ""]);
 
 // exports
 
