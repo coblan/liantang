@@ -26,7 +26,15 @@
         {name:'jianfang_apply',label:'建房申请'},
         {name:'cunwei_paper',label:'村委承诺书'},
         {name:'shigong_paper',label:'施工单位承诺书'},
-        {name:'jianfang_paper',label:'建房施工图'}
+        {name:'jianfang_paper',label:'建房施工图'},
+
+        {name:'person_paper',label:'个人信息汇总表'},
+        {name:'zhaijidi_paper',label:'宅基证复印件'},
+        {name:'yajin_paper',label:'押金凭证'},
+        {name:'meeting_paper',label:'会议记录'},
+        {name:'cun_gongshi_paper',label:'村公示表'},
+        {name:'zheng_gongshi_paper',label:'镇公示表'},
+        {name:'cengluo_paper',label:'承诺书'},
     ]
     xieyi_heads =[
         {name:'nongtang_paper','label':'弄堂协议'},
@@ -39,11 +47,23 @@
             head.type='field-uploader'
             head.upload_heads = shengqin_heads
         }else if(head.name=='xieyi'){
-            head.type='field-uploader'
-            head.upload_heads = xieyi_heads
+//            head.type='field-uploader'
+//            head.upload_heads = xieyi_heads
+            head.type='field-file-uploader'
+            head.config={
+                accept:'application/pdf,image/*',
+                com_btn:'file-uploader-btn-plus'
+            }
         }else if(head.name=='xiugai'){
             head.type='field-file-uploader'
             head.config={
+                accept:'application/pdf,image/*',
+                com_btn:'file-uploader-btn-plus'
+            }
+        }else if(head.name=='other'){
+            head.type='field-file-uploader'
+            head.config={
+                accept:'application/pdf,image/*',
                 com_btn:'file-uploader-btn-plus'
             }
         }
@@ -64,6 +84,7 @@
         data:{
             tabs:tabs,
             crt_tab:crt_tab,
+            show_apply:true,
         },
         mixins:[field_fun],
         methods:{
@@ -77,6 +98,10 @@
             after_sub:function(new_row){
                 location=ex.appendSearch({pk:new_row.pk})
             },
+            toggle_apply:function(){
+                $('#id_shenqing').toggle()
+                this.show_apply= !this.show_apply
+            }
 
         }
 
@@ -122,11 +147,19 @@
         <field  v-for='name in ["name","date","cunwei","phone","addr","state"]' key="name" :name='name' :kw='kw'></field>
     </div>
 
-    <!--<div class="field-panel">-->
-        <!--<field  key="yinji" name='yinji' :kw='kw'></field>-->
-    <!--</div>-->
-
     <div class="field-panel">
+        <div style="float: right" @click="toggle_apply()">
+            <button type="button" class="btn btn-default">
+                <span v-show="!show_apply">
+                    <i class="fa fa-chevron-left"></i>
+
+                </span>
+                <span  v-show="show_apply" >
+                     <i class="fa fa-chevron-down"></i>
+                </span>
+
+            </button>
+        </div>
         <field  key="shenqing" name='shenqing' :kw='kw'></field>
     </div>
 
@@ -135,6 +168,9 @@
     </div>
     <div class="field-panel">
         <field key="xiugai" name="xiugai" :kw="kw"></field>
+    </div>
+    <div class="field-panel">
+        <field key="other" name="other" :kw="kw"></field>
     </div>
 </div>
 
@@ -157,7 +193,7 @@
     })
 </script>
 <template id="field-uploader">
-    <div>
+    <div :id='"id_"+name'>
         <div v-for="head in kw.upload_heads">
             <com-uploader v-model="urls[head.name]" :label="head.label" :cfg="{readonly:kw.readonly}"></com-uploader>
         </div>
@@ -202,6 +238,9 @@
     #id_addr{
         width: 40em;
         max-width: 40em;
+    }
+    .file-uploader ul{
+        margin: 1em;
     }
 </style>
 {% endblock %}

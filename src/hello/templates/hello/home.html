@@ -16,8 +16,8 @@
     //	can_del=
     jianfang_total = {{jianfang_total | jsonify}}
     state_list = {{state_list | jsonify}}
-    yinji_total = {{yinji_total | jsonify}}
-    yingji_state_list={{yingji_state_list | jsonify}}
+    yinji = {{yinji | jsonify}}
+
     form_logic={
         el:'#there',
 //			data:{
@@ -34,8 +34,9 @@
         data:{
             jianfang_total:jianfang_total,
             state_list : state_list,
-            yinji_total:yinji_total,
-            yingji_state_list:yingji_state_list
+//            yinji_total:yinji_total,
+//            yingji_state_list:yingji_state_list
+            yinji:yinji,
         },
         mounted:function(){
             draw()
@@ -96,14 +97,31 @@
     </div>
 
 
-    <div style="margin-top:2em;">
-        <b>当月应急整改</b><span>共计 <span v-text="yinji_total"></span></span>
+    <div>
+        <div style="width: 49%;display: inline-block;">
+            <div style="margin-top:2em;">
+                <b>累计应急整改</b><span>共计 <span v-text="yinji.total"></span></span>
+            </div>
+
+            <div v-for="state in yinji.state_list" class="zhenggai-info" >
+                <div v-text="state.count"></div>
+                <div v-text="state.label"></div>
+            </div>
+        </div>
+
+        <div style="width: 49%;display: inline-block;">
+            <div style="margin-top:2em;">
+                <b>当月应急整改</b><span>共计 <span v-text="yinji.this_month_total"></span></span>
+            </div>
+
+            <div v-for="state in yinji.this_month_state_list" class="zhenggai-info" >
+                <div v-text="state.count"></div>
+                <div v-text="state.label"></div>
+            </div>
+        </div>
+
     </div>
 
-    <div v-for="state in yingji_state_list" class="zhenggai-info" >
-        <div v-text="state.count"></div>
-        <div v-text="state.label"></div>
-    </div>
 
 </div>
 </div>

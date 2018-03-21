@@ -45,8 +45,9 @@ class JianFangInfo(models.Model):
     phone=models.CharField('电话号码',max_length=100,blank=True)
     state = models.IntegerField('当前流程',blank=True,choices=JIAN_STATE,null=True)
     shenqing = JsonField(verbose_name='申请材料',default={},blank=True)
-    xieyi = JsonField(verbose_name='协议',default={},blank=True)
+    xieyi = models.TextField(verbose_name='协议',blank=True,help_text='支持PDF和图片')
     xiugai=models.TextField(verbose_name='申请修改',blank=True,help_text='支持PDF和图片')
+    other =models.TextField(verbose_name='其他',blank=True,help_text='支持PDF和图片')
     
     def __unicode__(self):
         return "%s(建房申请)"%self.name

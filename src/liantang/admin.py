@@ -18,7 +18,7 @@ class JianFangInfoTablePage(TablePage):
     
     class JianFangInfoTable(ModelTable):
         model = JianFangInfo
-        exclude=['shenqing','xieyi','xiugai']
+        exclude=['shenqing','xieyi','xiugai','other']
         def dict_row(self, inst):
             
             return {
