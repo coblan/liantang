@@ -2,7 +2,8 @@
 
 from __future__ import unicode_literals
 from django.contrib import admin
-from helpers.director.shortcut import TablePage,ModelTable,page_dc,FormPage,ModelFields,model_dc,regist_director,TabGroup,RowFilter,permit_list
+from helpers.director.shortcut import TablePage,ModelTable,page_dc,FormPage,ModelFields,model_dc,\
+     regist_director,TabGroup,RowFilter,permit_list,has_permit
 from .models import JianFangInfo,CunWei,Policy,ApplyTable,YinJiZhengGai
 from helpers.maintenance.update_static_timestamp import js_stamp
 
@@ -104,6 +105,18 @@ class JianFangInfoFormPage(FormPage):
                     'orgin_order':True
                 }
             return head
+        
+        def get_readonly_fields(self):
+            readonly_fields = ModelFields.get_readonly_fields(self)
+            if self.instance.pk and has_permit(self.crt_user,'liantang.-only_add'):
+                readonly_fields.append('name')
+            return readonly_fields
+        
+        #def get_context(self):
+            #ctx = ModelFields.get_context(self)
+            #if has_permit(self.crt_user,'liantang.-only_add'):
+                #pass
+            
     
 
 class YinJiTablePage(TablePage):
@@ -264,5 +277,10 @@ permit_list.append(JianFangInfo)
 permit_list.append(YinJiZhengGai)
 permit_list.append(Policy)
 permit_list.append(ApplyTable)
-
+permit_list.append({'name':'liantang','label':'建房信息乱改约束',
+                    'fields':[
+                        {'name':'-only_add','label':'只能添加建房信息文件','type':'bool'},
+                        {'name':'-only_first_edit','label':'只能首次编辑建房信息','type':'bool'},
+                    ]
+})
 
