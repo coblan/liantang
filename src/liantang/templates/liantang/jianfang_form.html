@@ -19,6 +19,8 @@
     crt_tab = '{{ crt_tab | default:'null' }}'
     crt_tab = crt_tab || tabs[0].name
 
+    only_add={{ only_add | jsonify }}
+
 
     shengqin_heads = [
         {name:'id_paper','label':'身份证复印件'},
@@ -109,6 +111,12 @@
 
     $(function () {
         new Vue(form_logic)
+
+        Vue.nextTick(function(){
+            if(only_add){
+                $('.remove-btn').hide()
+            }
+        })
     })
 </script>
 

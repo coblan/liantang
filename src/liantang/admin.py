@@ -108,14 +108,16 @@ class JianFangInfoFormPage(FormPage):
         
         def get_readonly_fields(self):
             readonly_fields = ModelFields.get_readonly_fields(self)
-            if self.instance.pk and has_permit(self.crt_user,'liantang.-only_add'):
-                readonly_fields.append('name')
+            # 只能首次修改
+            if self.instance.pk and has_permit(self.crt_user,'liantang.-only_first_edit'):
+                readonly_fields.extend(['name','date','cunwei','addr','phone','state'])
             return readonly_fields
         
-        #def get_context(self):
-            #ctx = ModelFields.get_context(self)
-            #if has_permit(self.crt_user,'liantang.-only_add'):
-                #pass
+        def get_context(self):
+            ctx = ModelFields.get_context(self)
+            if has_permit(self.crt_user,'liantang.-only_add'):
+                ctx['only_add']=True
+            return ctx
             
     
 
@@ -137,7 +139,8 @@ class YinJiTablePage(TablePage):
             
 
 class YinJiFormPage(FormPage):
-    ex_js=('/static/js/inputs_uis.pack.js?t=%s'%js_stamp.inputs_uis_pack_js,)
+    #ex_js=('/static/js/inputs_uis.pack.js?t=%s'%js_stamp.inputs_uis_pack_js,)
+    template='liantang/yinji_form.html'
     class YinjiForm(ModelFields):
         class Meta:
             model = YinJiZhengGai
@@ -156,8 +159,20 @@ class YinJiFormPage(FormPage):
             elif head['name']=='file':
                 head['type'] = 'field-file-uploader'
             return head
-        # def save_form(self):
-            # self.kw
+        
+        def get_readonly_fields(self):
+            readonly_fields = ModelFields.get_readonly_fields(self)
+            # 只能首次修改
+            if self.instance.pk and has_permit(self.crt_user,'liantang.-only_first_edit'):
+                readonly_fields.extend(['state','date','desp'])
+            return readonly_fields  
+        
+        def get_context(self):
+            ctx = ModelFields.get_context(self)
+            if has_permit(self.crt_user,'liantang.-only_add'):
+                ctx['only_add']=True
+            return ctx
+        
 
 class JianFangGroup(TabGroup):
     def __init__(self, request):
