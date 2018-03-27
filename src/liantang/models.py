@@ -45,7 +45,7 @@ class JianFangInfo(models.Model):
     addr = models.CharField('地址',max_length=500,blank=True)
     phone=models.CharField('电话号码',max_length=100,blank=True)
     state = models.IntegerField('当前流程',blank=True,choices=JIAN_STATE,default=-1)
-    shenqing = models.TextField(verbose_name='申请材料',default='{}')
+    shenqing = models.TextField(verbose_name='申请材料',blank=True,default='{}')
     xieyi = models.TextField(verbose_name='协议',blank=True,help_text='支持PDF和图片')
     xiugai=models.TextField(verbose_name='申请修改',blank=True,help_text='支持PDF和图片')
     other =models.TextField(verbose_name='其他',blank=True,help_text='支持PDF和图片')
