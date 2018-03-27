@@ -6,7 +6,7 @@ from helpers.director.shortcut import TablePage,ModelTable,page_dc,FormPage,Mode
      regist_director,TabGroup,RowFilter,permit_list,has_permit
 from .models import JianFangInfo,CunWei,Policy,ApplyTable,YinJiZhengGai
 from helpers.maintenance.update_static_timestamp import js_stamp
-
+import json
 # Register your models here.
 
 class JianFangInfoTablePage(TablePage):
@@ -24,7 +24,8 @@ class JianFangInfoTablePage(TablePage):
             
             return {
                 'cunwei':unicode(inst.cunwei),
-                'yinji':inst.yinjizhenggai_set.last().get_state() if inst.yinjizhenggai_set.last() else ""
+                'yinji':inst.yinjizhenggai_set.last().get_state() if inst.yinjizhenggai_set.last() else "",
+                'shenqing':json.loads(inst.shenqing) if inst.shenqing else {}
             }
         def get_heads(self):
             heads = super(self.__class__,self).get_heads()
@@ -88,6 +89,10 @@ class JianFangInfoFormPage(FormPage):
             model = JianFangInfo
             exclude=[]
         
+        def __init__(self, dc={},*args,**kw):
+            if dc.get('shenqing'):
+                dc['shenqing'] = json.dumps(dc['shenqing'])
+            ModelFields.__init__(self,dc,*args,**kw)
         def get_heads(self):
             heads = super(self.__class__,self).get_heads()
             heads.append({
@@ -96,6 +101,11 @@ class JianFangInfoFormPage(FormPage):
                 'label':'应急整改'
             })
             return heads
+        
+        def get_row(self):
+            row = ModelFields.get_row(self)
+            row['shenqing'] = json.loads(self.instance.shenqing) if self.instance.shenqing else {}
+            return row
         
         def dict_head(self, head):
             if head['name']=='date':
