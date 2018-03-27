@@ -65,7 +65,7 @@ class YinJiZhengGai(models.Model):
     应急整改
     """
     state = models.IntegerField('整改状态',blank=True,choices=YINGJI_STATE)
-    date = models.DateField(verbose_name='日期',blank=True)
+    date = models.DateField(verbose_name='日期',blank=True,null=True)
     desp = models.TextField(verbose_name='违规项目',blank=True)
     file = models.CharField('核定证明',max_length=500,blank=True)
     jianfang = models.ForeignKey(JianFangInfo,verbose_name='建房信息')
