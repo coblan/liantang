@@ -83,9 +83,9 @@ class Policy(models.Model):
     """
     政策协议
     """
-    name = models.CharField('名称',max_length=200,blank=True)
+    name = models.CharField('名称',max_length=200)
     desp = models.TextField(verbose_name='描述',blank=True)
-    file = models.CharField('文件材料',max_length=500,blank=True,help_text='请选择PDF文件上传')
+    file = models.CharField('文件材料',max_length=500,help_text='请选择(PDF/图片)上传')
     
     def __unicode__(self):
         return self.name  or '未命名协议'
@@ -97,9 +97,9 @@ class ApplyTable(models.Model):
     """
     申请表格
     """
-    name = models.CharField('名称',max_length=200,blank=True)
+    name = models.CharField('名称',max_length=200)
     desp = models.TextField(verbose_name='描述',blank=True)
-    file = models.CharField('文件材料',max_length=500,blank=True,help_text='请选择PDF文件上传')
+    file = models.CharField('文件材料',max_length=500,help_text='请选择(PDF/图片)上传')
     
     def __unicode__(self):
         return self.name   or '未命名表格'

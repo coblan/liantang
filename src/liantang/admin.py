@@ -242,7 +242,7 @@ class PolicyFormPage(FormPage):
             if head['name'] == 'file':
                 head['type'] = 'field-file-uploader'
                 head['config']={
-                    'accept':'.pdf',
+                    'accept':'application/pdf,image/*',
                     'sortable':False,
                     'multiple':False
                 }
@@ -270,7 +270,7 @@ class ApplyTableFormPage(FormPage):
             if head['name'] == 'file':
                 head['type'] = 'field-file-uploader'
                 head['config']={
-                    'accept':'.pdf',
+                    'accept':'application/pdf,image/*',
                     'sortable':False,
                     'multiple':False
                 }
