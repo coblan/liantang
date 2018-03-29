@@ -20,7 +20,7 @@ class CunWei(models.Model):
         verbose_name='村委信息表'
 
 JIAN_STATE=(
-    (0,'-----'),
+    (0,'初始化状态'),
     (11,'村委会预审'),
     (1,'镇规保办初审'),
     (2,'联席会议审核'),
