@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.contrib import admin
 from helpers.director.shortcut import TablePage,ModelTable,page_dc,FormPage,ModelFields,model_dc,\
      regist_director,TabGroup,RowFilter,permit_list,has_permit
-from .models import JianFangInfo,CunWei,Policy,ApplyTable,YinJiZhengGai
+from .models import JianFangInfo,CunWei,Policy,ApplyTable,YinJiZhengGai,JianguanInfo
 from helpers.maintenance.update_static_timestamp import js_stamp
 import json
 # Register your models here.
@@ -183,6 +183,44 @@ class YinJiFormPage(FormPage):
                 ctx['only_add']=True
             return ctx
         
+class JianguanInfoFormPage(FormPage):
+    template='liantang/jianguan_info_form.html'
+        
+    class fieldsCls(ModelFields):
+        def __init__(self,dc={}, *args,**kws):
+            
+            if dc.get('qianqi_zhunbei'):
+                dc['qianqi_zhunbei'] = json.dumps(dc['qianqi_zhunbei'])  
+            if dc.get('zaijian_jianguan'):
+                dc['zaijian_jianguan'] = json.dumps(dc['zaijian_jianguan'])  
+            if dc.get('jungong_yanshou'):
+                dc['jungong_yanshou'] = json.dumps(dc['jungong_yanshou'])                      
+                
+            
+            jianfang_pk = kws.get('pk')
+            if jianfang_pk:
+                jianfang_info = JianFangInfo.objects.get(pk = jianfang_pk)
+                instance,_ = JianguanInfo.objects.get_or_create(jianfang = jianfang_info)
+                dc['pk'] = instance.pk
+            ModelFields.__init__(self,dc=dc, *args,**kws)
+            
+        class Meta:
+            model=JianguanInfo
+            exclude = []
+        
+        def get_row(self):
+            dc = ModelFields.get_row(self)
+            dc['qianqi_zhunbei']=json.loads(self.instance.qianqi_zhunbei) if self.instance.qianqi_zhunbei else {}
+            dc['zaijian_jianguan'] = json.loads(dc['zaijian_jianguan']) if dc.get('zaijian_jianguan') else {}
+            dc['jungong_yanshou']= json.loads(dc['jungong_yanshou']) if dc.get('jungong_yanshou') else {}
+            return dc
+        
+        def get_context(self):
+            ctx = ModelFields.get_context(self)
+            if has_permit(self.crt_user,'liantang.-only_add'):
+                ctx['only_add']=True
+            return ctx        
+            
 
 class JianFangGroup(TabGroup):
     def __init__(self, request):
@@ -197,7 +235,9 @@ class JianFangGroup(TabGroup):
         if self.jianfanginfo:
             count = self.jianfanginfo.yinjizhenggai_set.count()
             tabs =[{'name':'blockgroup_normal','label':'基本信息','page_cls':JianFangInfoFormPage},
-                   {'name':'blockgroup_map','label':'应急整改(%s)'%count,'page_cls':YinJiTablePage}
+                   {'name':'jianguan_info','label':'监管信息','page_cls':JianguanInfoFormPage},
+                   {'name':'blockgroup_map','label':'应急整改(%s)'%count,'page_cls':YinJiTablePage},
+                   
               ]
         else:
             tabs=[{'name':'blockgroup_normal','label':'基本信息','page_cls':JianFangInfoFormPage},]
@@ -282,6 +322,7 @@ model_dc[CunWei] = {'fields':CunWeiFormPage.CunWeiForm}
 model_dc[Policy]={'fields':PolicyFormPage.PolicyForm}
 model_dc[ApplyTable]={'fields':ApplyTableFormPage.ApplyTableForm}
 model_dc[YinJiZhengGai]={'fields':YinJiFormPage.YinjiForm}
+model_dc[JianguanInfo]={'fields':JianguanInfoFormPage.fieldsCls}
 
 page_dc.update({
     'liantang.jianfanginfo':JianFangInfoTablePage,
@@ -302,6 +343,7 @@ permit_list.append(JianFangInfo)
 permit_list.append(YinJiZhengGai)
 permit_list.append(Policy)
 permit_list.append(ApplyTable)
+permit_list.append(JianguanInfo)
 permit_list.append({'name':'liantang','label':'建房信息乱改约束',
                     'fields':[
                         {'name':'-only_add','label':'只能添加建房信息文件','type':'bool'},
