@@ -25,7 +25,7 @@ class HomePage(object):
         yingji_state_list=[]
         
         for k,v in JIAN_STATE:
-            if k == 10:
+            if k==0 or k == 10:
                 continue
             count = JianFangInfo.objects.filter(state=k).count()
             state_list.append({'label':v,'count':count,'key':k})

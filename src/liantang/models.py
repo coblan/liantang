@@ -20,7 +20,6 @@ class CunWei(models.Model):
         verbose_name='村委信息表'
 
 JIAN_STATE=(
-    (-1,'----'),
     (11,'村委会预审'),
     (1,'镇规保办初审'),
     (2,'联席会议审核'),
@@ -44,7 +43,7 @@ class JianFangInfo(models.Model):
     cunwei = models.ForeignKey(CunWei,verbose_name='村委',on_delete=None,blank=True,null=True)
     addr = models.CharField('地址',max_length=500,blank=True)
     phone=models.CharField('电话号码',max_length=100,blank=True)
-    state = models.IntegerField('当前流程',blank=True,choices=JIAN_STATE,default=-1)
+    state = models.IntegerField('当前流程',choices=JIAN_STATE,default=11)
     shenqing = models.TextField(verbose_name='申请材料',blank=True,default='{}')
     xieyi = models.TextField(verbose_name='协议',blank=True,help_text='支持PDF和图片')
     xiugai=models.TextField(verbose_name='申请修改',blank=True,help_text='支持PDF和图片')
@@ -65,7 +64,7 @@ class YinJiZhengGai(models.Model):
     """
     应急整改
     """
-    state = models.IntegerField('整改状态',blank=True,choices=YINGJI_STATE)
+    state = models.IntegerField('整改状态',choices=YINGJI_STATE,default=1)
     date = models.DateField(verbose_name='日期',blank=True,null=True)
     desp = models.TextField(verbose_name='违规项目',blank=True)
     file = models.CharField('核定证明',max_length=500,blank=True)
@@ -79,14 +78,24 @@ class YinJiZhengGai(models.Model):
         return unicode(self.jianfang)+'.应急整改'
     class Meta:
         verbose_name='应急整改表'
-            
+          
+
+class JianguanInfo(models.Model):
+    """监管信息"""
+    jianfang = models.OneToOneField(JianFangInfo,blank=True,null=True)
+    qianqi_zhunbei = models.TextField(verbose_name='前期准备',blank=True)
+    zaijian_jianguan = models.TextField(verbose_name='在建监管',blank=True)
+    jungong_yanshou = models.TextField(verbose_name='竣工验收',blank=True)
+    
+    
+ 
 class Policy(models.Model):
     """
     政策协议
     """
-    name = models.CharField('名称',max_length=200,blank=True)
+    name = models.CharField('名称',max_length=200)
     desp = models.TextField(verbose_name='描述',blank=True)
-    file = models.CharField('文件材料',max_length=500,blank=True,help_text='请选择PDF文件上传')
+    file = models.CharField('文件材料',max_length=500,help_text='请选择(PDF/图片)上传')
     
     def __unicode__(self):
         return self.name  or '未命名协议'
@@ -98,9 +107,9 @@ class ApplyTable(models.Model):
     """
     申请表格
     """
-    name = models.CharField('名称',max_length=200,blank=True)
+    name = models.CharField('名称',max_length=200)
     desp = models.TextField(verbose_name='描述',blank=True)
-    file = models.CharField('文件材料',max_length=500,blank=True,help_text='请选择PDF文件上传')
+    file = models.CharField('文件材料',max_length=500,help_text='请选择(PDF/图片)上传')
     
     def __unicode__(self):
         return self.name   or '未命名表格'
