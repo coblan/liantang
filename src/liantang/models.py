@@ -78,7 +78,17 @@ class YinJiZhengGai(models.Model):
         return unicode(self.jianfang)+'.应急整改'
     class Meta:
         verbose_name='应急整改表'
-            
+          
+
+class JianguanInfo(models.Model):
+    """监管信息"""
+    jianfang = models.OneToOneField(JianFangInfo,blank=True,null=True)
+    qianqi_zhunbei = models.TextField(verbose_name='前期准备',blank=True)
+    zaijian_jianguan = models.TextField(verbose_name='在建监管',blank=True)
+    jungong_yanshou = models.TextField(verbose_name='竣工验收',blank=True)
+    
+    
+ 
 class Policy(models.Model):
     """
     政策协议

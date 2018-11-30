@@ -1,0 +1,249 @@
+{% extends "director/index.html" %}
+{% load static %}
+{% load jsonify %}
+
+{% block page_content %}
+
+<script type="text/javascript">
+
+
+    //	heads=
+    //	row =
+    //
+    //
+    //	can_add=
+    //	can_log=
+    //	can_del=
+
+    tabs={{ tabs | jsonify | default:'[]' }}
+    crt_tab = '{{ crt_tab | default:'null' }}'
+    crt_tab = crt_tab || tabs[0].name
+
+    only_add={{ only_add | jsonify }}
+
+    sp_heads={
+        qianqi_zhunbei : [
+        {name:"jianguanrenyuan",label:'监管人员',config:{
+            accept:'*',
+            accept_label:''
+        }},
+        {name:'caichuzhengming',label:'旧屋拆除证明',config: {
+            accept:'image/*',
+            accept_label:'(照片)'
+         }
+        }
+
+        ],
+        zaijian_jianguan :[
+        {name:'fangyang_table',label:'放样表',config:{accept:'image/*', accept_label:'(照片)'}},
+        {name:'jianfangzhou_table',label:'建房周进度表',config:{accept:'image/*', accept_label:'(照片)'}},
+        {name:'jianfang_node_table',label:'建房各节点检查表',config:{accept:'image/*', accept_label:'(照片)'}},
+    ],
+        jungong_yanshou :[
+        {name:'yashou_paper',label:'竣工验收单',config:{accept:'image/*', accept_label:'(照片)'}},
+    ],
+    }
+
+
+
+    ex.each(heads,function(head){
+        if(ex.isin(head.name,['qianqi_zhunbei','zaijian_jianguan','jungong_yanshou']) ){
+            head.type='field-uploader'
+            head.upload_heads = sp_heads[head.name]
+        }else if(head.name=='xieyi'){
+//            head.type='field-uploader'
+//            head.upload_heads = xieyi_heads
+            head.type='field-file-uploader'
+            head.config={
+                accept:'application/pdf,image/*',
+                com_btn:'file-uploader-btn-plus'
+            }
+        }else if(head.name=='xiugai'){
+            head.type='field-file-uploader'
+            head.config={
+                accept:'application/pdf,image/*',
+                com_btn:'file-uploader-btn-plus'
+            }
+        }else if(head.name=='other'){
+            head.type='field-file-uploader'
+            head.config={
+                accept:'application/pdf,image/*',
+                com_btn:'file-uploader-btn-plus'
+            }
+        }
+    })
+    form_logic={
+        el:'#there',
+//			data:{
+//				kw:{
+//					heads:heads,
+//			        row:row,
+//			   		errors:{},
+//				},
+//				menu:menu,
+//				can_add:can_add,
+//				can_del:can_del,
+//				can_log:can_log,
+//			},
+        data:{
+            tabs:tabs,
+            crt_tab:crt_tab,
+            show_apply:true,
+        },
+        mixins:[field_fun],
+        methods:{
+            item_link:function(name){
+                if(name!=this.crt_tab){
+                    return ex.appendSearch({_tab:name})
+                }else{
+                    return 'javascript:;'
+                }
+            },
+            after_sub:function(new_row){
+                location.reload()  //ex.appendSearch({pk:new_row.pk})
+            },
+
+
+        }
+
+    }
+
+    $(function () {
+        new Vue(form_logic)
+
+        Vue.nextTick(function(){
+            if(only_add){
+                $('.remove-btn').hide()
+            }
+        })
+    })
+</script>
+
+{% block extra_head %}
+
+{% endblock %}
+
+<div id='there'>
+
+    <div v-if="can_log" style='float: right;padding: 5px 20px;'>
+        <a :href="log_url()">日志</a>
+    </div>
+    <!--<path-nav :menu='menu'>-->
+    <!--<li><span v-text="page_label"></span></li>-->
+    <!--</path-nav>-->
+    <ol class="breadcrumb">
+        <b v-text="page_label"></b>
+    </ol>
+
+
+    <div class="flex">
+        <ul class="nav nav-tabs tabs flex-grow">
+            <li v-for="tab in tabs" :class="{'active':crt_tab==tab.name}"><a :href="item_link(tab.name)" v-text="tab.label" ></a></li>
+
+        </ul>
+
+        <com-form-btn :form_bus="this"></com-form-btn>
+
+    </div>
+
+    <!--<com-form-btn :submit="submit" :del_row="del_row" :cancel="cancel"></com-form-btn>-->
+
+
+    <div class="field-panel">
+        <field  key="qianqi_zhunbei" name='qianqi_zhunbei' :kw='kw'></field>
+    </div>
+
+    <div class="field-panel">
+        <field  key="zaijian_jianguan" name='zaijian_jianguan' :kw='kw'></field>
+    </div>
+    <div class="field-panel">
+        <field key="jungong_yanshou" name="jungong_yanshou" :kw="kw"></field>
+    </div>
+
+</div>
+
+<script>
+    Vue.component('field-uploader',{
+        template:'#field-uploader',
+        props:['name','row','kw'],
+        data:function(){
+            if(!this.row[this.name]){
+                Vue.set(this.row,this.name,{})
+            }
+            return {
+                urls:this.row[this.name],
+            }
+        },
+        mounted:function(){
+            if(this.kw.readonly){
+                ex.each(this.kw.upload_heads,function(head){
+                    head.config.readonly=true
+                })
+            }
+
+        },
+        watch:{
+
+        },
+    })
+</script>
+<template id="field-uploader">
+    <div :id='"id_"+name'>
+        <div v-for="head in kw.upload_heads">
+            <com-uploader v-model="urls[head.name]" :label="head.label" :config="head.config"></com-uploader>
+        </div>
+
+    </div>
+</template>
+
+<script>
+    Vue.component('com-uploader',{
+        template:'#com-uploader',
+        props:['label','value','config'],
+        data:function(){
+            var cfg ={
+               accept:'application/pdf,image/*',
+                accept_label:'PDF/图片'
+            }
+            for(var k in this.config){
+                if(this.config[k] != undefined){
+                    cfg[k]=this.config[k]
+                }
+            }
+
+            return {
+                inn_value:this.value,
+                cfg:cfg
+            }
+        },
+        watch:{
+            value:function(val){
+                if(this.inn_value != val){
+                    this.inn_value = val
+                }
+            },
+            inn_value:function(val){
+                this.$emit('input',val)
+            }
+        }
+
+    })
+</script>
+<template id="com-uploader">
+    <div style="margin: 2em;padding-top: 1em;border-top: 1px solid #bababa;">
+        <div style="margin-bottom:1em; "><span v-text="label"></span><span v-text="cfg.accept_label"></span></div>
+        <com-file-uploader v-model="inn_value" :config="cfg" :readonly="cfg.readonly"></com-file-uploader>
+    </div>
+</template>
+
+
+<style>
+    #id_addr{
+        width: 40em;
+        max-width: 40em;
+    }
+    .file-uploader ul{
+        margin: 1em;
+    }
+</style>
+{% endblock %}

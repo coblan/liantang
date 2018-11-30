@@ -18,10 +18,11 @@ class PcMenu(BaseEngine):
         
         {'label':'政策协议','url':page('liantang.policy'),'icon':fa('fa-sitemap')},
         {'label':'申请表格','url':page('liantang.applytable'),'icon':fa('fa-life-ring')},
+        {'label':'村委信息','url':page('liantang.cunwei'),'icon':fa('fa-life-ring')},
         {'label':'建房信息','url':page('liantang.jianfanginfo'),'icon':fa('fa-building')},
         # {'label':'GIS区域','url':page('geoinfo.blockpolygon'),'icon':fa('fa-map-o')},
         # {'label':'区域组','url':page('geoinfo.blockgroup'),'icon':fa('fa-map-o')}
-        {'label':'村委信息','url':page('liantang.cunwei'),'icon':fa('fa-life-ring')},
+       
         
         #{'label':'账号管理','url':page('user'),'icon':fa('fa-users')},
          {'label':'账号','url':page('user'),'icon':fa('fa-users'),'visible':can_list((User,Group)),
