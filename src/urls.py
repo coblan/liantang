@@ -24,7 +24,7 @@ from helpers.director import views as director_views
 from helpers.face import urls as face_urls
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
+    #url(r'^admin/', admin.site.urls),
     url(r'^accounts/',include(login_url)),
     
     url(r'^pc/([\w\.]+)/?$',PcMenu.as_view(),name=PcMenu.url_name),
