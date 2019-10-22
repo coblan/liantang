@@ -8,6 +8,7 @@ from .models import JianFangInfo,CunWei,Policy,ApplyTable,YinJiZhengGai,Jianguan
 from helpers.maintenance.update_static_timestamp import js_stamp
 import json
 # Register your models here.
+from django.utils.html import escape
 
 class JianFangInfoTablePage(TablePage):
     template='liantang/jianfang.html'
@@ -268,7 +269,8 @@ class PolicyTablePage(TablePage):
         
         def dict_row(self, inst):
             dc={
-                'file':'<a href="%s" target="_blank">查看</a>'%inst.file if inst.file else ''
+                'file':'<a href="%s" target="_blank">查看</a>'%inst.file if inst.file else '',
+                'desp':escape(inst.desp)
             }
             return dc        
         
@@ -286,7 +288,8 @@ class PolicyFormPage(FormPage):
                     'sortable':False,
                     'multiple':False
                 }
-            return head        
+            return head  
+        
 
 class ApplyTableTablePage(TablePage):
     class ApplyTable(ModelTable):
